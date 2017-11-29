@@ -1,0 +1,30 @@
+# 日志 #
+logs
+*.log
+
+# 依赖包 #
+node_modules
+
+# 开发工具 #
+.idea
+.vscode
+*.swp
+
+# 编译 #
+/dist
+/dll
+
+# Mac #
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# SVN #
+/.svn
+
+# Coverage 测试覆盖率 #
+/.coverage
+
+# 文档 #
+/.docs
