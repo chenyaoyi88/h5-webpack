@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+      // 指定ECMAScript目标版本
+      "target": "es5",
+      // 编译过程中需要引入的库文件的列表
+      "lib": [
+        "es6",
+        "dom"
+      ],
+      // 指定生成哪个模块系统代码
+      "module": "commonjs",
+      // 如何处理模块，这里使用node的io模块去处理
+      "moduleResolution": "node",
+      // 给源码里的装饰器声明加上设计类型元数据
+      "emitDecoratorMetadata": true,
+      // 启用实验性的ES装饰器
+      "experimentalDecorators": true,
+      // 允许从没有设置默认导出的模块中默认导入
+      "allowSyntheticDefaultImports": true,
+      // 生成相应的.map文件
+      "sourceMap": true,
+      // 在严格的null检查模式下，null和undefined值不包含在任何类型里，只允许用它们自己和any来赋值
+      "strictNullChecks": false,
+      // 解析非相对模块名的基准目录
+      "baseUrl": "./src",
+      // 重定向输出目录
+      "outDir": "dist"
+    },
+    // 排除文件夹/文件
+    "exclude": [
+      "node_modules"
+    ],
+    "awesomeTypescriptLoaderOptions": {
+      "forkChecker": true,
+      "useWebpackText": true
+    },
+    // 保存文件的时候根据 tsconfig-aot.json 重新生成文件
+    "compileOnSave": false,
+    "buildOnSave": false,
+  }

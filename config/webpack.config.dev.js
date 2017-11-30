@@ -9,14 +9,18 @@ console.log(process.env.NODE_ENV);
 
 module.exports = {
     entry: {
-        index: './src/js/index.js',
-        print: './src/js/print.js'
+        'index': './src/ts/index.ts'
+        // index: './src/js/index.js',
+        // print: './src/js/print.js'
     },
     output: {
         filename: './js/[name].bundle.js',
         path: path.resolve(__dirname, PROJECT.PATH.DIST)
     },
     devtool: 'cheap-module-eval-source-map',
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".json"]
+    },
     devServer: {
         contentBase: path.resolve(__dirname, PROJECT.PATH.SRC),
         // 一切服务都启用gzip 压缩
@@ -29,6 +33,7 @@ module.exports = {
         // host 设置为本机 ip 
         host: IP,
         // 热替换特性
+        inline: true,
         hot: true,
         // 启用 noInfo 后，诸如「启动时和每次保存之后，那些显示的 webpack 包(bundle)信息」的消息将被隐藏。错误和警告仍然会显示。
         noInfo: true,
@@ -41,6 +46,15 @@ module.exports = {
     },
     module: {
         rules: [{
+                test: /\.tsx?$/,
+                loader: "awesome-typescript-loader"
+            },
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            },
+            {
                 test: /\.css$/,
                 use: [
                     'style-loader',
@@ -70,6 +84,9 @@ module.exports = {
                     }
                 },
                 exclude: /node_modules/
+            }, {
+                test: /\.html$/,
+                loader: "raw-loader" 
             }
         ],
     },
@@ -84,7 +101,8 @@ module.exports = {
             // true 在 body 插入
             inject: true,
             // 页面上的资源加哈希（不是文件加）
-            hash: true
+            hash: true,
+            cache: false
         }),
         new webpack.DefinePlugin({
             'process.env': {
