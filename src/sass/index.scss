@@ -1,0 +1,13 @@
+@import 'reset.scss';
+@import 'minxins.scss';
+
+body {
+    background: green;
+    font-size: 30px;
+    .box {
+        border: 1px solid #ccc;
+        transform: translateY(20px);
+        background-image: url('../images/icon.png');
+        @include align-justify;
+    }
+}

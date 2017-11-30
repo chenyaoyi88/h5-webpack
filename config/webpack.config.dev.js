@@ -1,26 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const IP = require('ip').address();
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-const extractSass = new ExtractTextPlugin({
-    filename: "[name].[contenthash].css",
-    disable: process.env.NODE_ENV === "development"
-});
-
-const PATH = {
-    DIST: '../dist/',
-    SRC: '../src/'
-};
-
-const ENV = {
-    DEV: 'development',
-    TEST: 'test',
-    PROD: 'production'
-};
+const PROJECT = require('./project.config');
 
 console.log(process.env.NODE_ENV);
 
@@ -30,17 +13,18 @@ module.exports = {
         print: './src/js/print.js'
     },
     output: {
-        filename: './js/' + '[name].bundle.js',
-        path: path.resolve(__dirname, PATH.DIST)
+        filename: './js/[name].bundle.js',
+        path: path.resolve(__dirname, PROJECT.PATH.DIST)
     },
-    // inline-source-map 用于开发环境，生产环境要换
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-eval-source-map',
     devServer: {
-        contentBase: path.resolve(__dirname, PATH.SRC),
+        contentBase: path.resolve(__dirname, PROJECT.PATH.SRC),
         // 一切服务都启用gzip 压缩
         compress: true,
         port: 9000,
+        // 当使用内联模式(inline mode)时，在开发工具(DevTools)的控制台(console)将【bu】显示消息
         clientLogLevel: 'none',
+        // 当使用HTML5 History API，任意的 404 响应可以提供为 index.html 页面
         historyApiFallback: true,
         // host 设置为本机 ip 
         host: IP,
@@ -51,23 +35,30 @@ module.exports = {
         // 编译出错时，全屏覆盖
         overlay: true,
         // 启用 quiet 后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见
-        quiet: true
+        quiet: true,
+        // 自动打开浏览器
+        open: true
     },
     module: {
         rules: [{
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    'css-loader',
+                    'postcss-loader'
                 ],
                 exclude: /node_modules/ //include/exclude 添加必须处理/屏蔽不需要处理 (文件或文件夹)
             }, {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    //resolve-url-loader may be chained before sass-loader if necessary
-                    use: ['css-loader', 'sass-loader']
-                })
+                use: [{
+                    loader: "style-loader" // 将 JS 字符串生成为 style 节点
+                }, {
+                    loader: "css-loader" // 将 CSS 转化成 CommonJS 模块
+                }, {
+                    loader: "sass-loader" // 将 Sass 编译成 CSS
+                }, {
+                    loader: "postcss-loader" // 加前缀
+                }]
             },
             {
                 test: /\.(png|svg|gif|jpe?g)$/, //处理所有资源内url指向的文件，打包输出到原来的相对路径
@@ -84,18 +75,12 @@ module.exports = {
     },
     plugins: [
         // 清空之前生成的文件夹
-        new CleanWebpackPlugin([PATH.DIST]),
         new FriendlyErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(), //热加载插件,
-        new ExtractTextPlugin('css/style.css'),
-        //if you want to pass in options, you can do so:
-        //new ExtractTextPlugin({
-        //  filename: 'style.css'
-        //})
         new HtmlWebpackPlugin({
-            favicon: path.resolve(__dirname, PATH.SRC, 'favicon.ico'),
+            favicon: path.resolve(__dirname, PROJECT.PATH.SRC, 'favicon.ico'),
             // 模版 html 路径
-            template: path.resolve(__dirname, PATH.SRC, 'index.html'),
+            template: path.resolve(__dirname, PROJECT.PATH.SRC, 'index.html'),
             // true 在 body 插入
             inject: true,
             // 页面上的资源加哈希（不是文件加）
@@ -103,11 +88,8 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('production')
+                NODE_ENV: JSON.stringify(PROJECT.ENV.DEV)
             }
-        }),
-        // new HtmlWebpackPlugin({
-        // 	template: 'html-withimg-loader!' + __dirname + '/src/index.tmpl.html' //HtmlWebpackPlugin 配合 html-withimg-loader 打包html输出
-        // }),
+        })
     ],
 };
