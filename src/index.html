@@ -9,7 +9,41 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <title>webpack1</title>
-    <script src="./js/tool/set_rem.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?881cd81e355617a5dc97d47df725bd87";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })()
+    </script>
+    <script>
+        (function (win) {
+            const docEl = win.document.documentElement;
+            // 设计图宽度：默认按 750 计算
+            const PSD_STD = 750;
+            // 换算比例
+            const CALC_SCALE = 100;
+            // 计算 rem
+            function refreshRem() {
+                docEl.style.fontSize = docEl.clientWidth / (PSD_STD / 100) + 'px';
+            }
+
+            win.addEventListener('resize', function () {
+                refreshRem();
+            }, false);
+
+            win.addEventListener('pageshow', function (e) {
+                if (e.persisted) {
+                    refreshRem();
+                }
+            }, false);
+
+            refreshRem();
+
+        })(window);
+    </script>
 </head>
 
 <body>

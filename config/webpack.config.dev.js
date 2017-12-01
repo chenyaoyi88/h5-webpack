@@ -10,8 +10,6 @@ console.log(process.env.NODE_ENV);
 module.exports = {
     entry: {
         'index': './src/ts/index.ts'
-        // index: './src/js/index.js',
-        // print: './src/js/print.js'
     },
     output: {
         filename: './js/[name].bundle.js',
@@ -91,7 +89,6 @@ module.exports = {
         ],
     },
     plugins: [
-        // 清空之前生成的文件夹
         new FriendlyErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(), //热加载插件,
         new HtmlWebpackPlugin({

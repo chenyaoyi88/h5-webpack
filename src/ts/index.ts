@@ -1,3 +1,4 @@
+// import '../js/tool/set_rem';
 import * as _ from 'lodash';
 import '../css/style.css';
 import '../sass/index.scss';
@@ -7,7 +8,7 @@ import printMe from '../js/print.js';
 console.log('当前环境：' + process.env.NODE_ENV);
 
 if (process.env.NODE_ENV !== 'production') {
-    require('../index.html')
+    require('../index.html');
 }
 
 function component() {
