@@ -2,14 +2,15 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const IP = require('ip').address();
 const PROJECT = require('./project.config');
+const IP = require('ip').address();
 
 console.log(process.env.NODE_ENV);
 
 module.exports = {
     entry: {
-        'index': './src/ts/index.ts'
+        'index': './src/ts/index.ts',
+        'vendor': './src/vendor/vendor.ts'
     },
     output: {
         filename: './js/[name].bundle.js',
@@ -44,22 +45,8 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /\.tsx?$/,
-                loader: "awesome-typescript-loader"
-            },
-            {
-                enforce: "pre",
-                test: /\.js$/,
-                loader: "source-map-loader"
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'postcss-loader'
-                ],
-                exclude: /node_modules/ //include/exclude 添加必须处理/屏蔽不需要处理 (文件或文件夹)
+                test: /\.ts$/,
+                loader: 'ts-loader'
             }, {
                 test: /\.scss$/,
                 use: [{
@@ -73,18 +60,24 @@ module.exports = {
                 }]
             },
             {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader'
+                ]
+            }, {
                 test: /\.(png|svg|gif|jpe?g)$/, //处理所有资源内url指向的文件，打包输出到原来的相对路径
                 use: {
-                    loader: "file-loader", //file-loader
+                    loader: "file-loader",
                     options: {
                         name: "[name].[ext]",
                         outputPath: "images/"
                     }
-                },
-                exclude: /node_modules/
+                }
             }, {
                 test: /\.html$/,
-                loader: "raw-loader" 
+                loader: "html-loader"
             }
         ],
     },

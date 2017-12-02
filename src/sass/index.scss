@@ -2,12 +2,12 @@
 @import 'minxins.scss';
 
 body {
-    background: green;
+    background: red;
     font-size: 30px;
     .box {
-        border: 1px solid #ccc;
-        transform: translateY(20px);
-        background-image: url('../images/icon.png');
+        border: 2px solid #ccc;
+        transform: translateY(30px);
+        background-image: url('../images/scss-img.jpg');
         @include align-justify;
     }
 }

@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -140,7 +139,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                NODE_ENV: JSON.stringify(PROJECT.ENV.PROD)
             }
         })
     ]

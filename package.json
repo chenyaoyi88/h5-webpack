@@ -4,8 +4,13 @@
   "description": "webpack",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf dist",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js --progress",
-    "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.build.js --progress",
+    "build": "npm run clean && webpack --config config/webpack.config.build.js --progress --color --bail --hide-modules",
+    "build:dev": "cross-env NODE_ENV=development npm run build",
+    "build:test": "cross-env NODE_ENV=test npm run build",
+    "build:ready": "cross-env NODE_ENV=ready npm run build",
+    "build:prod": "cross-env NODE_ENV=production npm run build",
     "build:preview": "http-server dist -c-1 --cors -p 8001 -o"
   },
   "keywords": [
@@ -18,25 +23,31 @@
     "autoprefixer": "^7.1.6",
     "awesome-typescript-loader": "^3.4.0",
     "clean-webpack-plugin": "^0.1.17",
+    "colors": "^1.1.2",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
     "http-server": "^0.10.0",
     "ip": "^1.1.5",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.9",
     "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.19.0",
+    "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
     "webpack": "^3.9.0",
-    "webpack-dev-server": "^2.9.5"
+    "webpack-dev-server": "^2.9.5",
+    "webpack-merge": "^4.1.1"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "n-zepto": "^1.2.0"
   }
 }
