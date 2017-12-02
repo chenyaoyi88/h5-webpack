@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -63,7 +62,7 @@ module.exports = {
             {
                 // 处理图片
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                use: {
+                use: [{
                     loader: 'file-loader',
                     options: {
                         name: '[name].[hash].[ext]',
@@ -72,7 +71,29 @@ module.exports = {
                         // scss 文件背景图路径要以根目录作为参考起点
                         publicPath: '/'
                     }
-                },
+                }, {
+                    // 压缩图片
+                    loader: 'image-webpack-loader',
+                    options: {
+                        mozjpeg: {
+                            progressive: true,
+                            quality: 75
+                        },
+                        optipng: {
+                            enabled: false,
+                        },
+                        pngquant: {
+                            quality: '65-90',
+                            speed: 4
+                        },
+                        gifsicle: {
+                            interlaced: false,
+                        },
+                        webp: {
+                            quality: 75
+                        }
+                    }
+                }],
                 exclude: /node_modules/
             }, {
                 // 处理 html 里面用 img 标签的图片，不然打包的时候不会处理 
