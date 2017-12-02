@@ -60,6 +60,7 @@ npm run build:prod
 │   ├── ts                              # ts 文件
 │   ├── vendor                          # 第三方库或工具
 │   ├── index.d.ts                      # 声明文件
+│   ├── favicon.ico                     # 网站图标
 │   └── index.html                      # 单页模版
 ├── .gitignore                          # 不提交到 git 的文件
 ├── package.json                        # 项目说明文件
@@ -68,3 +69,14 @@ npm run build:prod
 ├── tsconfig                            # ts 配置文件
 └── tslint.json                         # ts 编码规范文件
 ```
+
+### dist（打包后的文件夹）
+
+```bash
+├── css                                 
+├── images                              
+├── js                                  
+├── favicon.ico                         
+└── index.html                          
+```
+

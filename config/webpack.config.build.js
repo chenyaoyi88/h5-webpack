@@ -62,7 +62,7 @@ module.exports = {
             },
             {
                 // 处理图片
-                test: /\.(png|svg|gif|jpe?g)$/,
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
                 use: {
                     loader: 'file-loader',
                     options: {

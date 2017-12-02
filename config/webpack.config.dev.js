@@ -67,7 +67,8 @@ module.exports = {
                     'postcss-loader'
                 ]
             }, {
-                test: /\.(png|svg|gif|jpe?g)$/, //处理所有资源内url指向的文件，打包输出到原来的相对路径
+                // 处理所有资源内url指向的文件，打包输出到原来的相对路径
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/, 
                 use: {
                     loader: "file-loader",
                     options: {
