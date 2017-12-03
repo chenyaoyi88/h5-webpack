@@ -6,8 +6,13 @@ body {
     font-size: 30px;
     .box {
         border: 2px solid #ccc;
-        transform: translateY(30px);
+        transform: rotate(15deg);
         background-image: url('../images/scss-img.jpg');
-        @include align-justify;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .box2 {
+        background: linear-gradient(red, blue);
     }
 }
