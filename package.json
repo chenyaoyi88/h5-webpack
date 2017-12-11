@@ -1,21 +1,38 @@
 {
-  "name": "webpack",
+  "name": "h5-webpack-demo",
   "version": "1.0.0",
-  "description": "webpack",
-  "main": "index.js",
+  "description": "用 webpack + typescript + sass 来开发单页活动的模版",
+  "main": "index.ts",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf test prod dev",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js --progress",
     "build": "npm run clean && webpack --config config/webpack.config.build.js --progress --color --bail --hide-modules",
     "build:dev": "cross-env NODE_ENV=development npm run build",
     "build:test": "cross-env NODE_ENV=test npm run build",
-    "build:ready": "cross-env NODE_ENV=ready npm run build",
     "build:prod": "cross-env NODE_ENV=production npm run build",
-    "build:preview": "http-server dist -c-1 --cors -p 8001 -o"
+    "preview:dev": "http-server dev -c-1 --cors -p 8001 -o",
+    "preview:test": "http-server test -c-1 --cors -p 8002 -o",
+    "preview:prod": "http-server prod -c-1 --cors -p 8003 -o"
   },
   "keywords": [
-    "webpack"
+    "webpack",
+    "typescript",
+    "sass"
   ],
+  "contributors": [
+    "陈耀义"
+  ],
+  "bugs": {
+    "email": "152296058@qq.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chenyaoyi88/h5-webpack.git"
+  },
+  "engines": {
+    "node": "~9.1.0",
+    "npm": "~5.5.1"
+  },
   "author": "cyy",
   "license": "MIT",
   "devDependencies": {

@@ -1,0 +1,21 @@
+// px 转换成 rem
+@function px2rem($px) {
+    @return $px*750/750/100+rem;
+}
+
+// 水平垂直
+@mixin align-justify() {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin mask($zindex) {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $zindex;
+}

@@ -1,0 +1,285 @@
+@import '../index.scss';
+
+// 弹窗
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    &.show {
+        display: flex;
+    }
+    &:after {
+        display: block;
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 21;
+    }
+    .modal-wrap {
+        width: px2rem(680);
+        min-height: px2rem(770);
+        margin-top: px2rem(-206);
+        background-color: #fff;
+        position: relative;
+        z-index: 22;
+        border-radius: 5px;
+    }
+}
+
+// 弹窗主显示区域
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    .modal-text-wrap {
+        padding: 0 px2rem(30);
+        height: px2rem(620);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .modal-btn-wrap {
+        height: px2rem(148);
+    }
+}
+
+.modal-text-wrap {
+    .modal-text {
+        font-size: px2rem(35);
+        font-weight: bold;
+        color: #fc3252;
+        line-height: 1.5;
+    }
+    .text-gray {
+        margin-top: px2rem(5);
+        font-size: px2rem(28);
+        color: #999999;
+    }
+}
+
+// 确定按钮
+.modal-btn-wrap {
+    min-height: px2rem(150);
+    display: flex;
+    justify-content: center;
+    .modal-btn {
+        width: px2rem(600);
+        height: px2rem(90);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: px2rem(40);
+        color: #fff;
+        background: #FFB600;
+        border-radius: px2rem(45);
+    }
+}
+
+// 司机注册的弹窗辅助样式
+.act-signup {
+    .modal-content {
+        .modal-text-wrap {
+            width: 100%;
+            flex-direction: column;
+            .modal-img-wrap {
+                margin-top: px2rem(73);
+                .img {
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
+        .modal-text {
+            margin-top: px2rem(40);
+            .text {
+                font-size: px2rem(30);
+                font-weight: 500;
+                color: #909090;
+                text-align: center;
+            }
+        }
+    }
+    &.unapply,
+    &.unmatch,
+    &.get,
+    &.over {
+        .img {
+            margin-left: px2rem(20);
+        }
+    }
+    &.get {
+        .modal-img-wrap {
+            width: px2rem(349);
+        }
+        .modal-text {
+            width: px2rem(450);
+            margin-top: px2rem(40);
+        }
+    }
+    &.subscribe {
+        .modal-img-wrap {
+            width: px2rem(344);
+        }
+        .modal-text {
+            width: px2rem(480);
+            margin-top: px2rem(20);
+        }
+    }
+    &.unmatch {
+        .modal-img-wrap {
+            width: px2rem(378);
+        }
+        .modal-text {
+            width: px2rem(330);
+        }
+    }
+    &.unapply {
+        .modal-img-wrap {
+            width: px2rem(366);
+        }
+        .modal-text {
+            width: px2rem(390);
+        }
+    }
+    &.nofound {
+        .modal-img-wrap {
+            width: px2rem(337);
+        }
+        .modal-text {
+            width: px2rem(360);
+        }
+    }
+    &.success {
+        .modal-img-wrap {
+            width: px2rem(490);
+        }
+        .modal-text {
+            width: px2rem(426);
+            margin-top: px2rem(15);
+        }
+    }
+    &.error {
+        .modal-img-wrap {
+            width: px2rem(378);
+        }
+        .modal-text {
+            width: px2rem(330);
+        }
+    }
+    &.over {
+        .modal-img-wrap {
+            width: px2rem(366);
+        }
+        .modal-text {
+            width: 100%;
+        }
+    }
+    &.audit {
+        .modal-img-wrap {
+            width: px2rem(366);
+        }
+        .modal-text {
+            width: px2rem(390);
+        }
+    }
+}
+
+.loading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 19;
+        display: block;
+        content: ' ';
+        background-color: rgba($color: #000, $alpha: 0.8);
+    }
+    .loading-text {
+        position: relative;
+        z-index: 22;
+        font-size: 18px;
+        color: #fff;
+        margin-top: 5px;
+    }
+    .loading-timer {
+        width: 44px;
+        height: 44px;
+        background-color: transparent;
+        box-shadow: inset 0px 0px 0px 2px #fff;
+        border-radius: 50%;
+        position: relative;
+        z-index: 21;
+        &:before,
+        &:after {
+            position: absolute;
+            content: "";
+            background-color: #fff;
+        }
+        &:before {
+            width: 12px;
+            height: 2px;
+            top: 22px;
+            left: 22px;
+            -webkit-transform-origin: 1px 1px;
+            -moz-transform-origin: 1px 1px;
+            transform-origin: 1px 1px;
+            -webkit-animation: hrhand 8s linear infinite;
+            -moz-animation: hrhand 8s linear infinite;
+            animation: hrhand 8s linear infinite;
+        }
+        &:after {
+            width: 18px;
+            height: 2px;
+            top: 22px;
+            left: 22px;
+            -webkit-transform-origin: 1px 1px;
+            -moz-transform-origin: 1px 1px;
+            transform-origin: 1px 1px;
+            -webkit-animation: minhand 2s linear infinite;
+            -moz-animation: minhand 2s linear infinite;
+            animation: minhand 2s linear infinite;
+        }
+    }
+}
+
+@keyframes minhand {
+    0% {
+        -webkit-transform: rotate(0deg)
+    }
+    100% {
+        -webkit-transform: rotate(360deg)
+    }
+}
+
+@keyframes hrhand {
+    0% {
+        transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}

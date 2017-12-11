@@ -4,8 +4,32 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PROJECT = require('./project.config');
+const colors = require('colors');
 
-console.log(process.env.NODE_ENV);
+const ENV = process.env.NODE_ENV;
+let envText = '--';
+
+switch (ENV) {
+    case 'development':
+        envText = '开发环境';
+        PROJECT.PUBLIC_PATH = '/';
+        PROJECT.OUTPUT = PROJECT.PATH.DEV;
+        break;
+    case 'test':
+        envText = '测试环境';
+        PROJECT.PUBLIC_PATH = '//sit.guanghuobao.com/ghb-web/' + PROJECT.NAME;
+        PROJECT.OUTPUT = PROJECT.PATH.TEST;
+        break;
+    case 'production':
+        envText = '生产环境';
+        PROJECT.PUBLIC_PATH = '//www.guanghuobao.com/ghb-web/' + PROJECT.NAME;
+        PROJECT.OUTPUT = PROJECT.PATH.PROD;
+        break;
+};
+
+console.log('****************************'.yellow);
+console.log('当前打包环境：'.rainbow + envText.green + '(' + ENV.cyan + ')');
+console.log('****************************'.yellow);
 
 module.exports = {
     entry: {
@@ -15,11 +39,11 @@ module.exports = {
         'vendor': './src/vendor/vendor.ts'
     },
     output: {
-        filename: './js/[name].[hash].bundle.js',
+        filename: './js/[name].[hash:8].bundle.js',
         // 最后打包输出的文件夹位置
-        path: path.resolve(__dirname, PROJECT.PATH.DIST),
+        path: path.resolve(__dirname, PROJECT.OUTPUT),
         // sourcemap文件的名字，必须和devtool一起来使用
-        sourceMapFilename: './js/[name].[hash].bundle.map',
+        sourceMapFilename: './js/[name].[hash:8].bundle.map',
     },
     devtool: 'cheap-module-source-map',
     resolve: {
@@ -65,26 +89,26 @@ module.exports = {
                 use: [{
                     loader: 'file-loader',
                     options: {
-                        name: '[name].[hash].[ext]',
+                        name: '[name].[hash:8].[ext]',
                         // 抽取出来放在 images 文件夹里面
                         outputPath: 'images/',
                         // scss 文件背景图路径要以根目录作为参考起点
-                        publicPath: '/'
+                        publicPath: PROJECT.PUBLIC_PATH,
+                        // 图片在非开发模式下使用相对路径
+                        // useRelativePath: ENV === 'development' ? false : true
                     }
                 }, {
                     // 压缩图片
                     loader: 'image-webpack-loader',
                     options: {
                         mozjpeg: {
-                            progressive: true,
-                            quality: 75
+                            quality: 100
                         },
                         optipng: {
-                            enabled: false,
+                            optimizationLevel: 7
                         },
                         pngquant: {
-                            quality: '65-90',
-                            speed: 4
+                            quality: 100
                         },
                         gifsicle: {
                             interlaced: false,
@@ -112,7 +136,7 @@ module.exports = {
         new FriendlyErrorsPlugin(),
         // 通过 ExtractTextPlugin 把 css 抽离出来，生成一个独立的 css 文件再页面上引入
         new ExtractTextPlugin({
-            filename: 'css/index.[contenthash] .css'
+            filename: 'css/index.[contenthash].css'
         }),
         new HtmlWebpackPlugin({
             favicon: path.resolve(__dirname, PROJECT.PATH.SRC, 'favicon.ico'),
@@ -161,7 +185,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                NODE_ENV: JSON.stringify(ENV)
             }
         })
     ]

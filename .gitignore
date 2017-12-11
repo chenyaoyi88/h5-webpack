@@ -11,8 +11,10 @@ node_modules
 *.swp
 
 # 编译 #
-/dist
 /dll
+/dev
+/test
+/prod
 
 # Mac #
 .DS_Store

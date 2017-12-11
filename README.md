@@ -4,7 +4,7 @@
 
 开发模式：不会有任何文件生成。
 
-生产模式：在此文件同级目录打包出 dist 文件夹，最终要上传到生产服务器的静态文件。
+生产模式：在此文件同级目录打包出 test（测试环境）/prod（生产环境） 文件夹，最终要上传到生产服务器的静态文件。
 
 ### 命令
 
@@ -32,29 +32,38 @@ npm start
 
 打包各种环境：
 
-```javascript
-// 开发
+```bash
+# 开发
 npm run build:dev
 
-// 测试
+# 测试
 npm run build:test
 
-// 预生产/仿真
+# 预生产/仿真
 npm run build:ready
 
-// 生产/正式
+# 生产/正式
 npm run build:prod
 ```
 
+##### 打包完后预览项目：
+
+```bash
+
+# 预览打包好的【测试】环境静态文件
+npm run preview:test
+
+# 预览打包好的【正式】环境静态文件
+npm run preview:prod
+```
  
 ### 目录结构描述
 
 ```bash
 ├── config                              # webpack 配置
-├── dist                                # 打包后的静态文件（打包才有）
+├── prod/test/dev                       # 打包后的静态文件（打包才有）
 ├── node_modules                        # 项目依赖包（需要安装）
 ├── src                                 # 开发目录
-│   ├── css                             # css 样式文件
 │   ├── images                          # 图片文件
 │   ├── sass                            # scss 样式文件
 │   ├── ts                              # ts 文件
@@ -70,7 +79,7 @@ npm run build:prod
 └── tslint.json                         # ts 编码规范文件
 ```
 
-### dist（打包后的文件夹）
+### prod/test（打包后的文件夹）
 
 ```bash
 ├── css                                 

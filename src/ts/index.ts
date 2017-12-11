@@ -1,49 +1,59 @@
-console.log('当前环境：' + process.env.NODE_ENV);
-// 非生产环境，将 index.html 导进来，从而达到修改 html 文件的时候触发 reload
-if (process.env.NODE_ENV !== 'production') {
-    require('../index.html');
-} else {
-    console.log = function(){};
-}
-// 处理外部第三方库
-import { $, _ } from '../vendor/vendor';
-// 处理 css 包括背景图片
-import '../css/style.css';
-// 处理 scss 包括背景图片
+
 import '../sass/index.scss';
-// 处理 图片
-import * as Icon from '../images/ts-img.jpg';
-// 处理 js 文件
-import printMe from '../js/print.js';
+import { ajax, Tool, api, weixin } from './util';
+import { toast, loading, modal } from '../components';
+import { modalConfig } from './config';
 
+Tool.domReady(() => {
 
-function component() {
+    // 初始化微信 js-sdk 配置，以及分享到朋友圈/好友功能
+    weixin.init();
 
-    console.log($('#box'));
+    const oBtnSubmit = document.getElementById('submit-btn');
+    const oBtnDownload = document.getElementById('download-btn');
+    const oPhone = (document.getElementById('phone') as HTMLInputElement);
 
-    var element = document.createElement('div');
-    var btn = document.createElement('button');
+    /**
+     * 点击领取请求接口拿结果
+     */
+    oBtnSubmit.addEventListener('click', function () {
 
-    // 使用第三方方法库
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    element.classList.add('hello');
+        if (!(/\d{11}/.test(oPhone.value))) {
+            toast('您输入的手机号码格式有误');
+            return;
+        }
 
-    // 使用 typescript 方式定义的方法 sayName
-    btn.innerHTML = sayName('fuck');
-    btn.onclick = printMe;
-    element.appendChild(btn);
+        loading.show();
 
-    // 使用导入的图片
-    var myIcon = new Image();
-    myIcon.src = Icon;
+        ajax({
+            type: 'POST',
+            url: api.receiveRedpack,
+            data: JSON.stringify({
+                phone: oPhone.value,
+                openId: Tool.getQueryString('openId')
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            success: function (data: any) {
+                loading.hide();
+                modal.show(modalConfig(data.code));
+                console.log(data);
+            },
+            error: function (err: any) {
+                loading.hide();
+                console.log(err);
+                modal.show(modalConfig('500'));
+            }
+        });
 
-    element.appendChild(myIcon);
+    }, false);
 
-    return element;
-}
+    /**
+     * 点击下载司机端 app 
+     */
+    oBtnDownload.addEventListener('click', function () {
+        Tool.appDownload('dirver');
+    }, false);
 
-document.body.appendChild(component());
-
-function sayName(name: string) {
-    return `your name is ${name}`;
-}
+});

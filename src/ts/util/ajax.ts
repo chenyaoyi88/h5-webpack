@@ -1,18 +1,4 @@
-var HOST = window.location.host;
-var API = '';
-if (HOST.includes('sit')) {
-    // 测试环境
-    API = '//sit.guanghuobao.com';
-} else if (HOST.includes('www')) {
-    API = '//www.guanghuobao.com';
-} else {
-    // 你的 ip 
-    API = '//10.2.10.227';
-    // API = '//127.0.0.1:4000';
-}
-console.log(API);
-
-function json2url(json) {
+function json2url(json: { t: number }): string {
     json.t = Math.random();
     var arr = [];
     for (var name in json) {
@@ -32,8 +18,8 @@ function json2url(json) {
  * success 请求成功回调
  * error 请求失败回调
  */
-function ajax(options) {
-    options = options || {};
+function ajax(options: Ajax<any>): Promise<any> {
+    // options = options || {};
     if (!options.url) {
         return;
     }
@@ -41,35 +27,34 @@ function ajax(options) {
     options.data = options.data || {};
     options.type = options.type || 'GET';
     options.timeout = options.timeout || 0;
-    options.header = options.header || {};
+    options.headers = options.headers || {};
 
     let xhr = null;
     let timer = null;
-    const str = json2url(options.data);
 
     //1 创建
-    if (window.XMLHttpRequest) {
-        xhr = new XMLHttpRequest();
-    } else {
-        xhr = new ActiveXObject('Microsoft.XMLHTTP');
-    }
+    xhr = new XMLHttpRequest();
 
     if (options.type.toUpperCase() === 'GET') {
-        xhr.open('GET', options.url + '?' + str, true);
+        xhr.open('GET', options.url + '?' + json2url(options.data), true);
         xhr.send();
     } else {
         xhr.open('POST', options.url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        for (let pro in options.header) {
-            xhr.setRequestHeader(pro, options.header[pro]);
+        for (let pro in options.headers) {
+            xhr.setRequestHeader(pro, options.headers[pro]);
         }
-        xhr.send(str);
+        if (typeof options.data === 'string') {
+            xhr.send(options.data);
+        } else {
+            xhr.send(json2url(options.data));
+        }
     }
 
     return new Promise((resolve, reject) => {
         xhr.onreadystatechange = function () {
             // 完成
-            if (xhr.readyState === 4) { 
+            if (xhr.readyState === 4) {
                 clearTimeout(timer);
                 // 成功
                 if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
@@ -95,33 +80,4 @@ function ajax(options) {
 
 }
 
-/**
- * toast 显示
- * @param {*String} text 要显示的文本内容
- */
-const toast = function (text) {
-    if (document.getElementById('toast')) {
-        return false;
-    }
-
-    const doc = document.body;
-    const toastText = text;
-
-    doc.insertAdjacentHTML(
-        'beforeEnd',
-        `<div class='toast' id='toast'>
-                <div class='toast-wrap'>
-                    <div class='toast-content'>${toastText}</div>
-                </div>
-            </div>`
-    );
-
-    var oToast = document.getElementById('toast');
-    var oToastText = oToast.querySelector('.toast-content');
-
-    oToastText.classList.add('slideInUp', 'animated');
-
-    oToastText.addEventListener('webkitAnimationEnd', function () {
-        doc.removeChild(oToast);
-    });
-}
+export { ajax };
