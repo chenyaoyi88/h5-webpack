@@ -20,10 +20,6 @@ switch (APP_ENV) {
         // 测试环境
         requestHost = '//sit.guanghuobao.com';
         break;
-    case 'ready':
-        // 仿真/预生产
-        requestHost = '';
-        break;
     case 'production':
         // 正式/生产
         requestHost = '//www.guanghuobao.com';

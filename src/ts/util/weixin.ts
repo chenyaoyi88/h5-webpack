@@ -10,8 +10,8 @@ const weixin = {
         title: '分享标题',
         // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         link: `https://www.guanghuobao.com/${Env === 'production' ? '' : 'sit/'}api/v1/wechat/auth/receiveRedpack/request`,
-        // 分享描述
-        desc: '分别描述',
+        // 分享描述（分享描述不能过长，否则会影响分享图标分享给好友时无法正常显示）
+        desc: '分享描述',
         // 分享图标
         imgUrl: 'https:' + shareIMG,
         // 分享类型,music、video或link，不填默认为link
@@ -44,8 +44,6 @@ const weixin = {
                         'onMenuShareAppMessage'
                     ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                 });
-
-                console.log(wx);
 
                 // config 配置成功
                 wx.ready(function () {

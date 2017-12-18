@@ -27,7 +27,6 @@ npm start
 
 - development   开发
 - test          测试
-- ready         预生产/仿真
 - prodction     生产/正式    
 
 打包各种环境：
@@ -38,9 +37,6 @@ npm run build:dev
 
 # 测试
 npm run build:test
-
-# 预生产/仿真
-npm run build:ready
 
 # 生产/正式
 npm run build:prod
@@ -61,7 +57,7 @@ npm run preview:prod
 
 ```bash
 ├── config                              # webpack 配置
-├── prod/test/dev                       # 打包后的静态文件（打包才有）
+├── prod/test/dev                       # 打包后的静态文件（打包成功后才会出现）
 ├── node_modules                        # 项目依赖包（需要安装）
 ├── src                                 # 开发目录
 │   ├── images                          # 图片文件
@@ -89,3 +85,17 @@ npm run preview:prod
 └── index.html                          
 ```
 
+### 注意事项
+
+问题一：
+
+布局用 REM 作为单位，默认以设计图 PSD 宽度为 750 的作为参考，如果您的设计图是其他尺寸，要去2个地方修改：
+
+1. 到 src/sass/util/minxins.scss 里面 px2rem 函数的 750 改你想要的尺寸
+2. 到 index.html 里面将 PSD_STD 改你想要的尺寸
+
+问题二：
+
+目前 vendor 文件在没有引入任何第三方库的情况下，依旧在 html 文件中会加载，如果没有使用第三方库，需要手动到 config 配置中注释掉相关代码。
+
+以上问题会在后续中进一步优化。
