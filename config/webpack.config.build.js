@@ -53,11 +53,18 @@ module.exports = {
     },
     module: {
         rules: [
-            // 处理 typescript 文件
+            // 处理所有 .ts 和 .tsx 后缀的文件
             {
-                test: /\.ts$/,
-                loader: 'ts-loader'
-            }, {
+                test: /\.tsx?$/,
+                loader: "awesome-typescript-loader"
+            },
+            // 所有输出的的 .js 后缀的文件都有source-map
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            },
+            {
                 // 处理 scss 文件
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({

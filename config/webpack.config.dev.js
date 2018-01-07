@@ -50,14 +50,17 @@ module.exports = {
         },
         // 隐藏 Child extract-text-webpack-plugin 的输出信息
         stats: {
-          children: false
+            children: false
         },
     },
     module: {
-        rules: [{
-                test: /\.ts$/,
-                loader: 'ts-loader'
-            }, {
+        rules: [
+            // 处理所有 .ts 和 .tsx 后缀的文件
+            {
+                test: /\.tsx?$/,
+                loader: "awesome-typescript-loader"
+            },
+            {
                 test: /\.scss$/,
                 use: [{
                     loader: "style-loader" // 将 JS 字符串生成为 style 节点

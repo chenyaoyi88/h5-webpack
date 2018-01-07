@@ -99,3 +99,10 @@ npm run preview:prod
 目前 vendor 文件在没有引入任何第三方库的情况下，依旧在 html 文件中会加载，如果没有使用第三方库，需要手动到 config 配置中注释掉相关代码。
 
 以上问题会在后续中进一步优化。
+
+### 更新日志
+
+2018.01.07  
+
+- 更新 webpack 配置，用官方推荐的 awesome-typescript-loader 替代 ts-loader（因为这个 ts-loader 无法处理 Class 类的定义以及很多 ts 语法支持得不是很好，会报错） ；
+- 自己写了一个 ts 专用的 cyy-tool (cnpm i cyy-tool -D 安装)常用函数工具发布到了 npmjs，尝试在此项目中导入，目前暂无问题；

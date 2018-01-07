@@ -3,6 +3,7 @@ import '../sass/index.scss';
 import { ajax, Tool, api, weixin } from './util';
 import { toast, loading, modal } from '../components';
 import { modalConfig } from './config';
+import { getRandomNum } from 'cyy-tool';
 
 Tool.domReady(() => {
 

@@ -1,6 +1,6 @@
 {
   "name": "h5-webpack-demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "用 webpack + typescript + sass 来开发单页活动的模版",
   "main": "index.ts",
   "scripts": {
@@ -38,11 +38,12 @@
   "devDependencies": {
     "@types/node": "^8.0.53",
     "autoprefixer": "^7.1.6",
-    "awesome-typescript-loader": "^3.4.0",
+    "awesome-typescript-loader": "^3.4.1",
     "clean-webpack-plugin": "^0.1.17",
     "colors": "^1.1.2",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.7",
+    "cyy-tool": "^1.0.8",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "friendly-errors-webpack-plugin": "^1.6.1",
@@ -58,7 +59,6 @@
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.19.0",
-    "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
     "webpack": "^3.9.0",
     "webpack-dev-server": "^2.9.5"
