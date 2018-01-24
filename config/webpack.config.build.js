@@ -18,13 +18,13 @@ switch (ENV) {
     case 'test':
         envText = '测试环境';
         PROJECT.PUBLIC_PATH = '/';
-        // PROJECT.PUBLIC_PATH = '//sit.xxx.com/xxx-web/' + PROJECT.NAME;
+        // PROJECT.PUBLIC_PATH = '//sit.guanghuobao.com/ghb-web/' + PROJECT.NAME;
         PROJECT.OUTPUT = PROJECT.PATH.TEST;
         break;
     case 'production':
         envText = '生产环境';
         PROJECT.PUBLIC_PATH = '/';
-        // PROJECT.PUBLIC_PATH = '//www.xxx.com/xxx-web/' + PROJECT.NAME;
+        // PROJECT.PUBLIC_PATH = '//www.guanghuobao.com/ghb-web/' + PROJECT.NAME;
         PROJECT.OUTPUT = PROJECT.PATH.PROD;
         break;
 };
@@ -105,26 +105,6 @@ module.exports = {
                         publicPath: PROJECT.PUBLIC_PATH,
                         // 图片在非开发模式下使用相对路径
                         // useRelativePath: ENV === 'development' ? false : true
-                    }
-                }, {
-                    // 压缩图片
-                    loader: 'image-webpack-loader',
-                    options: {
-                        mozjpeg: {
-                            quality: 100
-                        },
-                        optipng: {
-                            optimizationLevel: 7
-                        },
-                        pngquant: {
-                            quality: 100
-                        },
-                        gifsicle: {
-                            interlaced: false,
-                        },
-                        webp: {
-                            quality: 75
-                        }
                     }
                 }],
                 exclude: /node_modules/

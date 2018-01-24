@@ -13,25 +13,25 @@
         display: block;
     } 
     .driver {
-        width: px2rem(600);
+        width: px2vw(600);
         position: absolute;
-        left: px2rem(75);
+        left: px2vw(75);
         z-index: 11;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        top: px2rem(445);
+        top: px2vw(445);
         .phone-wrap {
-            width: px2rem(600);
-            height: px2rem(100);
+            width: px2vw(600);
+            height: px2vw(100);
             @include align-justify();
             background: #fff;
             border-radius: 5px;
             .phone {
                 width: 100%;
                 height: 100%;
-                font-size: px2rem(42);
+                font-size: 20px;
                 text-align: center;
                 border: none;
                 outline: none;
@@ -41,19 +41,19 @@
         }
         .btn-wrap {
             .ds-btn {
-                width: px2rem(480);
-                height: px2rem(80);
+                width: px2vw(480);
+                height: px2vw(80);
                 @include align-justify();
                 button {
                     display: block;
                     width: 100%;
                     height: 100%;
-                    font-size: px2rem(32);
+                    font-size: px2vw(32);
                     color: #FF4F4F;
                     background: #FFBF06;
                     border: none;
                     outline: none;
-                    border-radius: px2rem(40);
+                    border-radius: px2vw(40);
                     &:active {
                         color: rgb(250, 33, 33);
                         background-color: rgb(240, 172, 0);
@@ -72,14 +72,14 @@
 }
 
 .m-t-36 {
-    margin-top: px2rem(36);
+    margin-top: px2vw(36);
 }
 .m-t-32 {
-    margin-top: px2rem(32);
+    margin-top: px2vw(32);
 }
 
 input.phone-plac::-webkit-input-placeholder {
-    font-size: px2rem(30);
+    font-size: px2vw(30);
     color: rgba(219,219,219,1);
 }
 
@@ -101,7 +101,7 @@ input.phone-plac::-webkit-input-placeholder {
         .text-wrap {
             padding: 10px;
             .text {
-                font-size: px2rem(40);
+                font-size: px2vw(40);
             }
         }
         .iknow-wrap {
@@ -110,7 +110,7 @@ input.phone-plac::-webkit-input-placeholder {
                 margin: 10px auto;
                 padding: 10px 15px;
                 text-align: center;
-                font-size: px2rem(40);
+                font-size: px2vw(40);
                 background: green;
                 border-radius: 5px;
             }

@@ -1,6 +1,6 @@
-// px 转换成 rem
-@function px2rem($px) {
-    @return $px*750/750/100+rem;
+// px 转换成 vw
+@function px2vw($px) {
+    @return ($px / 750) * 100vw;
 }
 
 // 水平垂直

@@ -26,9 +26,9 @@
         z-index: 21;
     }
     .modal-wrap {
-        width: px2rem(680);
-        min-height: px2rem(770);
-        margin-top: px2rem(-206);
+        width: px2vw(680);
+        min-height: px2vw(770);
+        margin-top: px2vw(-206);
         background-color: #fff;
         position: relative;
         z-index: 22;
@@ -41,47 +41,47 @@
     display: flex;
     flex-direction: column;
     .modal-text-wrap {
-        padding: 0 px2rem(30);
-        height: px2rem(620);
+        padding: 0 px2vw(30);
+        height: px2vw(620);
         display: flex;
         flex-direction: column;
         align-items: center;
     }
     .modal-btn-wrap {
-        height: px2rem(148);
+        height: px2vw(148);
     }
 }
 
 .modal-text-wrap {
     .modal-text {
-        font-size: px2rem(35);
+        font-size: px2vw(35);
         font-weight: bold;
         color: #fc3252;
         line-height: 1.5;
     }
     .text-gray {
-        margin-top: px2rem(5);
-        font-size: px2rem(28);
+        margin-top: px2vw(5);
+        font-size: px2vw(28);
         color: #999999;
     }
 }
 
 // 确定按钮
 .modal-btn-wrap {
-    min-height: px2rem(150);
+    min-height: px2vw(150);
     display: flex;
     justify-content: center;
     .modal-btn {
-        width: px2rem(600);
-        height: px2rem(90);
+        width: px2vw(600);
+        height: px2vw(90);
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        font-size: px2rem(40);
+        font-size: px2vw(40);
         color: #fff;
         background: #FFB600;
-        border-radius: px2rem(45);
+        border-radius: px2vw(45);
     }
 }
 
@@ -92,7 +92,7 @@
             width: 100%;
             flex-direction: column;
             .modal-img-wrap {
-                margin-top: px2rem(73);
+                margin-top: px2vw(73);
                 .img {
                     display: block;
                     width: 100%;
@@ -100,9 +100,9 @@
             }
         }
         .modal-text {
-            margin-top: px2rem(40);
+            margin-top: px2vw(40);
             .text {
-                font-size: px2rem(30);
+                font-size: px2vw(30);
                 font-weight: 500;
                 color: #909090;
                 text-align: center;
@@ -114,71 +114,71 @@
     &.get,
     &.over {
         .img {
-            margin-left: px2rem(20);
+            margin-left: px2vw(20);
         }
     }
     &.get {
         .modal-img-wrap {
-            width: px2rem(349);
+            width: px2vw(349);
         }
         .modal-text {
-            width: px2rem(450);
-            margin-top: px2rem(40);
+            width: px2vw(450);
+            margin-top: px2vw(40);
         }
     }
     &.subscribe {
         .modal-img-wrap {
-            width: px2rem(344);
+            width: px2vw(344);
         }
         .modal-text {
-            width: px2rem(480);
-            margin-top: px2rem(20);
+            width: px2vw(480);
+            margin-top: px2vw(20);
         }
     }
     &.unmatch {
         .modal-img-wrap {
-            width: px2rem(378);
+            width: px2vw(378);
         }
         .modal-text {
-            width: px2rem(330);
+            width: px2vw(330);
         }
     }
     &.unapply {
         .modal-img-wrap {
-            width: px2rem(366);
+            width: px2vw(366);
         }
         .modal-text {
-            width: px2rem(390);
+            width: px2vw(390);
         }
     }
     &.nofound {
         .modal-img-wrap {
-            width: px2rem(337);
+            width: px2vw(337);
         }
         .modal-text {
-            width: px2rem(360);
+            width: px2vw(360);
         }
     }
     &.success {
         .modal-img-wrap {
-            width: px2rem(490);
+            width: px2vw(490);
         }
         .modal-text {
-            width: px2rem(426);
-            margin-top: px2rem(15);
+            width: px2vw(426);
+            margin-top: px2vw(15);
         }
     }
     &.error {
         .modal-img-wrap {
-            width: px2rem(378);
+            width: px2vw(378);
         }
         .modal-text {
-            width: px2rem(330);
+            width: px2vw(330);
         }
     }
     &.over {
         .modal-img-wrap {
-            width: px2rem(366);
+            width: px2vw(366);
         }
         .modal-text {
             width: 100%;
@@ -186,10 +186,10 @@
     }
     &.audit {
         .modal-img-wrap {
-            width: px2rem(366);
+            width: px2vw(366);
         }
         .modal-text {
-            width: px2rem(390);
+            width: px2vw(390);
         }
     }
 }
