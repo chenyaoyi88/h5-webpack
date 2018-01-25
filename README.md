@@ -103,5 +103,4 @@ npm run preview:prod
 2018.01.25
 
 - 更新 webpack 配置，图片打包之后的路径更新为相对路径（之前设置不合理）；
-- 由 rem 单位改为 vw 单位，因此可以去掉 index.html 上面的 rem 计算；
-- 暂时删除图片压缩配置，因为 ios 设备上不能显示。
+- 由 rem 单位改为 vw 单位，因此可以去掉 index.html 上面的 rem 计算。

@@ -4,9 +4,9 @@
 }
 
 // 水平垂直
-@mixin align-justify() {
+@mixin align-justify($dir: row) {
     display: flex;
-    flex-direction: row;
+    flex-direction: $dir;
     align-items: center;
     justify-content: center;
 }

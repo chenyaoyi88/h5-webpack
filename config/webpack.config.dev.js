@@ -3,9 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const PROJECT = require('./project.config');
-const IP = require('ip').address();
-
-console.log(process.env.NODE_ENV);
+const IP = require('internal-ip').v4.sync();
 
 module.exports = {
     entry: {

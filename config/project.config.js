@@ -11,5 +11,5 @@ module.exports = {
         TEST: 'test',
         PROD: 'production'
     },
-    PUBLIC_PATH: ''
+    PUBLIC_PATH: './'
 };
