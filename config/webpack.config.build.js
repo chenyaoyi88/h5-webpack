@@ -12,19 +12,17 @@ let envText = '--';
 switch (ENV) {
     case 'development':
         envText = '开发环境';
-        PROJECT.PUBLIC_PATH = '/';
+        PROJECT.PUBLIC_PATH = './';
         PROJECT.OUTPUT = PROJECT.PATH.DEV;
         break;
     case 'test':
         envText = '测试环境';
-        PROJECT.PUBLIC_PATH = '/';
-        // PROJECT.PUBLIC_PATH = '//sit.guanghuobao.com/ghb-web/' + PROJECT.NAME;
+        PROJECT.PUBLIC_PATH = './';
         PROJECT.OUTPUT = PROJECT.PATH.TEST;
         break;
     case 'production':
         envText = '生产环境';
-        PROJECT.PUBLIC_PATH = '/';
-        // PROJECT.PUBLIC_PATH = '//www.guanghuobao.com/ghb-web/' + PROJECT.NAME;
+        PROJECT.PUBLIC_PATH = './';
         PROJECT.OUTPUT = PROJECT.PATH.PROD;
         break;
 };

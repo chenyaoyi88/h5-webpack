@@ -89,13 +89,6 @@ npm run preview:prod
 
 问题一：
 
-布局用 REM 作为单位，默认以设计图 PSD 宽度为 750 的作为参考，如果您的设计图是其他尺寸，要去2个地方修改：
-
-1. 到 src/sass/util/minxins.scss 里面 px2rem 函数的 750 改你想要的尺寸
-2. 到 index.html 里面将 PSD_STD 改你想要的尺寸
-
-问题二：
-
 目前 vendor 文件在没有引入任何第三方库的情况下，依旧在 html 文件中会加载，如果没有使用第三方库，需要手动到 config 配置中注释掉相关代码。
 
 以上问题会在后续中进一步优化。
@@ -106,3 +99,9 @@ npm run preview:prod
 
 - 更新 webpack 配置，用官方推荐的 awesome-typescript-loader 替代 ts-loader（因为这个 ts-loader 无法处理 Class 类的定义以及很多 ts 语法支持得不是很好，会报错） ；
 - 自己写了一个 ts 专用的 cyy-tool (cnpm i cyy-tool -D 安装)常用函数工具发布到了 npmjs，尝试在此项目中导入，目前暂无问题；
+
+2018.01.25
+
+- 更新 webpack 配置，图片打包之后的路径更新为相对路径（之前设置不合理）；
+- 由 rem 单位改为 vw 单位，因此可以去掉 index.html 上面的 rem 计算；
+- 暂时删除图片压缩配置，因为 ios 设备上不能显示。

@@ -1,5 +1,4 @@
 module.exports = {
-    NAME: 'h5-webpack/',
     OUTPUT: '/',
     PATH: {
         DEV: '../dev/',
