@@ -1,0 +1,26 @@
+// 弹窗辅助样式
+.act-other {
+  // 图片包裹框样式
+  .modal-img-wrap {
+    margin-top: px2vw(50);
+  }
+  // 图片下面的文字样式
+  .modal-text {
+    margin-top: px2vw(40);
+    .text {
+      font-size: px2vw(30);
+      font-weight: 500;
+      color: #909090;
+      text-align: center;
+    }
+  }
+  // 按钮样式
+  .modal-btn-wrap {
+    user-select: none;
+  }
+  &.error {
+    .modal-img-wrap {
+      width: px2vw(380);
+    }
+  }
+}

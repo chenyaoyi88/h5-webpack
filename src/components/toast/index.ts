@@ -1,34 +1,46 @@
 import './toast.scss';
+
+interface Toast {
+  // 显示时间
+  duration?: number;
+}
+
 /**
  * toast 显示
  * @param {*String} text 要显示的文本内容
  */
-const toast = function (text: string) {
+const toast = function(text: string, options: Toast = {}) {
 
-    if (document.getElementById('toast')) {
-        return false;
-    }
+  if (document.getElementById('toast')) {
+    return false;
+  }
 
-    const doc = document.body;
-    const toastText = text;
+  const doc = document.body;
+  const toastText = text;
 
-    doc.insertAdjacentHTML(
-        'beforeend',
-        `<div class='toast' id='toast'>
+  doc.insertAdjacentHTML(
+    'beforeend',
+    `<div class='toast' id='toast'>
                         <div class='toast-wrap'>
-                            <div class='toast-content'>${toastText}</div>
+                            <div data-id="toast-content" class='toast-content'>${toastText}</div>
                         </div>
                     </div>`
-    );
+  );
 
-    var oToast = document.getElementById('toast');
-    var oToastText = oToast.querySelector('.toast-content');
+  var oToast = document.getElementById('toast');
+  var oToastText = oToast.querySelector(
+    '[data-id=toast-content]'
+  ) as HTMLDivElement;
 
-    oToastText.classList.add('slideInUp', 'animated');
+  oToastText.classList.add('slideInUp', 'animated');
 
-    oToastText.addEventListener('webkitAnimationEnd', function () {
-        doc.removeChild(oToast);
-    });
+  if (options.duration) {
+    oToastText.style.webkitAnimationDuration = options.duration + 's';
+  }
+
+  oToastText.addEventListener('webkitAnimationEnd', function() {
+    doc.removeChild(oToast);
+  });
 };
 
 export { toast };

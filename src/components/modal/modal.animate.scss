@@ -1,0 +1,22 @@
+.modal {
+  &.modal-animate {
+    .modal-wrap {
+      transform: scale(0.7);
+      opacity: 0;
+      transition: 0.3s all ease;
+    }
+    .modal-bg {
+      opacity: 0;
+      transition: 0.3s all ease;
+    }
+  }
+  &.show-animate {
+    .modal-wrap {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .modal-bg {
+      opacity: 1;
+    }
+  }
+}

@@ -11,6 +11,10 @@ interface Window {
 interface ShowModal {
     // 要现实的文本
     content: string;
+    // 是否展示动画
+    isShowAnimate?: boolean;
+    // 是否展示动画
+    modalAnimate?: string;
     // modal 另外添加的样式名
     modalClass?: string;
     // modalWrap 另外添加的样式名

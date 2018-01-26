@@ -6,6 +6,7 @@ if (APP_ENV !== 'production') {
   console.log = function() {};
   console.dir = function() {};
 }
+
 console.log('当前环境：' + APP_ENV);
 
 let requestHost = '//';
@@ -13,22 +14,9 @@ let requestHost = '//';
 if (APP_ENV === 'development') {
   // 开发环境
   requestHost = '//127.0.0.1:4000';
+} else {
+  requestHost = '//' + window.location.host;
 }
-
-// switch (APP_ENV) {
-//   case 'development':
-//     // 开发环境
-//     requestHost = '//127.0.0.1:4000';
-//     break;
-//   case 'test':
-//     // 测试环境
-//     requestHost = '//sit.guanghuobao.com';
-//     break;
-//   case 'production':
-//     // 正式/生产
-//     requestHost = '//www.guanghuobao.com';
-//     break;
-// }
 
 const api = {
   // 获取微信 js-sdk 参数
