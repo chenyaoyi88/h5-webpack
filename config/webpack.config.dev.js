@@ -7,11 +7,14 @@ const IP = require('internal-ip').v4.sync();
 
 module.exports = {
     entry: {
+        // 主逻辑 js
         'index': './src/ts/index.ts',
+        // 第三方库或者工具
         'vendor': './src/vendor/vendor.ts'
     },
     output: {
         filename: './js/[name].bundle.js',
+        // 最后打包输出的文件夹位置
         path: path.resolve(__dirname, PROJECT.PATH.DEV)
     },
     devtool: 'cheap-module-eval-source-map',
@@ -27,7 +30,7 @@ module.exports = {
         clientLogLevel: 'none',
         // 当使用HTML5 History API，任意的 404 响应可以提供为 index.html 页面
         historyApiFallback: true,
-        // host 设置为本机 ip 
+        // host 设置为本机内网 ip ，确保内网其他人能直接访问
         host: IP,
         inline: true,
         // 热替换特性
