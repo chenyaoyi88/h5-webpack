@@ -95,6 +95,8 @@ $modal-text-wrap-height: px2vw(620);
     background: #ffb600;
     border-radius: px2vw(45);
     user-select: none;
+    border: none;
+    outline: none;
     &:active {
       background-color: rgb(240, 172, 0);
     }

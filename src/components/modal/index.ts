@@ -32,8 +32,8 @@ const modal = {
       `;
     } else {
       sBtnWrapHtml = `
-      <div data-id="modal-close-btn" id="modal-confirm" class="modal-btn">${options.confirmText ||
-        '知道了'}</div>
+      <button data-id="modal-close-btn" id="modal-confirm" class="modal-btn">${options.confirmText ||
+        '知道了'}</button>
               `;
     }
 
@@ -89,14 +89,14 @@ const modal = {
               if (oBody.contains(oModal)) {
                 oBody.removeChild(oModal);
               }
-              document.removeEventListener('touchend', removeModal, false);
+              document.removeEventListener('click', removeModal, false);
             },
             false
           );
         } else {
           // 不是动画打开
           oBody.removeChild(oModal);
-          document.removeEventListener('touchend', removeModal, false);
+          document.removeEventListener('click', removeModal, false);
         }
         oBody.style.overflow = 'auto';
       }
@@ -109,7 +109,7 @@ const modal = {
     }
 
     oBody.style.overflow = 'hidden';
-    document.addEventListener('touchend', removeModal, false);
+    document.addEventListener('click', removeModal, false);
   }
 };
 
