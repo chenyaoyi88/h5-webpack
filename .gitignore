@@ -30,3 +30,6 @@ Thumbs.db
 
 # 文档 #
 /.docs
+
+# 保密 #
+config.ftp.json
