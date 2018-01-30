@@ -3,18 +3,28 @@ const fs = require('fs');
 const chalk = require('chalk');
 const Client = require('ftp');
 const ftp = new Client();
+/**
+ * config.ftp.json 的格式
+ * 
+ * {
+ *   "host": "主机",
+ *   "user": "用户名",
+ *   "password": "密码"
+ * }
+ */
 const ftpConfig = require('../config.ftp.json');
+// 环境变量
 const ENV = process.env.NODE_ENV;
 
 const appName = '/' + require('../config.json').appName;
 
 // 远程基本路径
 // const remoteBasePath = './pub/ghb-web';
-// const remoteBasePath = './public_html';
 // 目录结构
 // const remotePathLevel = '/act2/2018';
-// 完整的上传目录
-let entireBasePath = './pub/ghb-web/act2/2018/01' + appName;
+
+// 完整的上传目录，下面例子是上传到 ftp 的 ./pub/ghb-web/act/2018/01 文件夹下
+const entireBasePath = './pub/ghb-web/act/2018/01' + appName;
 
 // 目录（文件夹）
 const dir = {
@@ -40,8 +50,9 @@ readDirLoop(curEnvDir, function(err, data) {
   aFiles = data;
 });
 
+// 延迟 1 秒连接 ftp，因为上面 readDirLoop 递归计算文件个数需要时间，而且不知道什么时候计算完
 setTimeout(function() {
-  console.log(`约 ${aFiles.length} 个文件要上传`);
+  console.log(`约 ${chalk.green(aFiles.length)} 个文件需要上传`);
 
   ftp.on('ready', function() {
     log(chalk.green('ftp 连接成功'));
@@ -59,21 +70,23 @@ setTimeout(function() {
 }, 1000);
 
 /**
- * 创建项目根目录
+ * 在 FTP 上创建本项目文件夹
  *
- * @param {any} basePath 项目根目录
+ * @param {any} basePath 要创建的本项目文件夹 FTP 位置
  * @returns
  */
 function createProjectBaseDir(basePath) {
   return new Promise((resolve, reject) => {
     ftp.mkdir(basePath, true, function(err) {
       if (err) {
-        console.log(chalk.red('创建项目根目录失败：'), err);
+        console.log(chalk.red('在 FTP 上创建本项目文件夹失败：'), err);
         reject(err);
         ftp.end();
         return;
       }
-      log(chalk.yellow('创建项目根目录成功：') + chalk.green(basePath));
+      log(
+        chalk.yellow('在 FTP 上创建本项目文件夹成功：') + chalk.green(basePath)
+      );
       resolve();
     });
   });
@@ -94,9 +107,9 @@ function uploadFile(uploadPath, remotePath, file) {
       console.log(chalk.yellow('尝试重新上传：'), file);
       return uploadFile(uploadPath, remotePath, file);
     }
-    console.log(file, chalk.green('上传文件成功：'));
+    console.log(remoteFilePath, chalk.green('上传成功'));
     aUploadSuccess.push(remoteFilePath);
-    console.log('已成功上传：' + chalk.green(aUploadSuccess.length) + '个');
+    console.log('已成功上传：' + chalk.green(aUploadSuccess.length) + ' 个');
     if (aUploadSuccess.length === aFiles.length) {
       ftp.end();
       log(chalk.green('上传完成'));
@@ -148,6 +161,12 @@ function readUploadDir(uploadPath, remotePath) {
   });
 }
 
+/**
+ * 递归计算文件个数
+ *
+ * @param {any} uploadPath
+ * @param {any} callback
+ */
 function readDirLoop(uploadPath, callback) {
   let results = [];
   fs.readdir(uploadPath, function(err, files) {

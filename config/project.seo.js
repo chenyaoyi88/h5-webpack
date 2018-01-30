@@ -10,7 +10,7 @@ const project_html = 'index.html';
 const indexHtml = path.resolve(__dirname, PROJECT.PATH.SRC, project_html);
 
 // 要替换描述、关键字和标题
-const aReg = [{
+const aRegInfo = [{
     type: 'description',
     reg: /\<meta\s+name="description"\s+content=".*"\>/,
     text: `<meta name="description" content="${configSEO.description}">`
@@ -27,7 +27,7 @@ const aReg = [{
 // 获取 html 的内容
 const sIndexHtml = fs.readFileSync(indexHtml, 'utf-8');
 // 替换 html 的内容，得到替换后的新 html 内容
-const newIndexHtml = utils.replaceHtml(aReg, sIndexHtml);
+const newIndexHtml = utils.replaceHtml(aRegInfo, sIndexHtml);
 // 将替换后的 html 内容 重写回去
 fs.writeFileSync(indexHtml, newIndexHtml, 'utf-8');
 

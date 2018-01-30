@@ -1,7 +1,7 @@
 /**
  * 替换 html 文本
  *
- * @param {any} oReg 替换的键值对
+ * @param {any} oReg 替换的数组
  * @param {any} str 字符串
  * @returns
  */

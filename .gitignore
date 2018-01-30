@@ -31,5 +31,5 @@ Thumbs.db
 # 文档 #
 /.docs
 
-# 保密 #
+# 保密文件不上传 #
 config.ftp.json
