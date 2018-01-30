@@ -4,7 +4,7 @@
   "description": "用 webpack + typescript + sass 来开发单页活动的模版",
   "main": "index.ts",
   "scripts": {
-    "init": "node config/project.init.js",
+    "seo": "node config/project.seo.js",
     "clean": "rimraf test prod dev",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js --progress",
     "build": "npm run clean && webpack --config config/webpack.config.build.js --progress --color --bail --hide-modules",
