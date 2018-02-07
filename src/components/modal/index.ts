@@ -1,7 +1,7 @@
 import './modal.scss';
 
 const modal = {
-  show: function(options?: ShowModal) {
+  show: function (options?: ShowModal) {
     // 防止重复生成
     if (document.getElementById('modal')) {
       return;
@@ -28,7 +28,7 @@ const modal = {
       sBtnWrapHtml = `
       <div data-id="modal-close-btn" id="modal-confirm">${
         options.confirmHtml
-      }</div>
+        }</div>
       `;
     } else {
       sBtnWrapHtml = `
@@ -40,13 +40,13 @@ const modal = {
     oBody.insertAdjacentHTML(
       'beforeend',
       `<div class="modal act-normal ${
-        options.isShowAnimate ? 'modal-animate' : ''
+      options.isShowAnimate ? 'modal-animate' : ''
       } ${options.modalClass || ''}" id="${ModalId}">
             <div class="modal-wrap ${options.modalWrapClass || ''}">
                 <div class="modal-content ${options.contentWrapClass || ''}">
 
                     <div data-id="modal-text-wrap" class="modal-text-wrap modal-normal ${options.textWrapClass ||
-                      ''}">
+      ''}">
                         ${sContentHtml}
                     </div>
                     <div data-id="modal-btn-wrap" class="modal-btn-wrap">
@@ -64,8 +64,9 @@ const modal = {
     const oModalContentWrap = oModal.querySelector('[data-id=modal-text-wrap]');
     const oModalBtnWrap = oModal.querySelector('[data-id=modal-btn-wrap]');
     const aModalCloseBtn = oModal.querySelectorAll('[data-id=modal-close-btn]');
+    let curPos: any = '';
 
-    const removeModal = function(event: any): void {
+    const removeModal = function (event: any): void {
       event.preventDefault();
       const oTarget = event.srcElement;
       const targetID = oTarget['dataset'].id;
@@ -85,7 +86,7 @@ const modal = {
           oModal.classList.remove('show-animate');
           oModal.addEventListener(
             'webkitTransitionEnd',
-            function() {
+            function () {
               if (oBody.contains(oModal)) {
                 oBody.removeChild(oModal);
               }
@@ -98,17 +99,30 @@ const modal = {
           oBody.removeChild(oModal);
           document.removeEventListener('click', removeModal, false);
         }
-        oBody.style.overflow = 'auto';
+
+        // 恢复位置
+        oBody.style.overflow = '';
+        oBody.style.position = null;
+        oBody.style.top = null;
+        window.scrollTo(0, curPos);
+
       }
     };
 
     if (options.isShowAnimate) {
-      setTimeout(function() {
+      setTimeout(function () {
         oModal.classList.add('show-animate');
       }, 50);
     }
 
-    oBody.style.overflow = 'hidden';
+    const scrollTop = window.pageYOffset
+      || document.documentElement.scrollTop
+      || oBody.scrollTop
+      || 0;
+    curPos = scrollTop;//保存当前滚动条位置
+    oBody.style.top = -1 * scrollTop + "px";
+    oBody.style.position = 'fixed';
+
     document.addEventListener('click', removeModal, false);
   }
 };

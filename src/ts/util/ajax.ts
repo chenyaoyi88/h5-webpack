@@ -36,6 +36,11 @@ function ajax(options: Ajax<any>): Promise<any> {
 
   if (options.type.toUpperCase() === 'GET') {
     xhr.open('GET', options.url + '?' + json2url(options.data), true);
+    if (options.headers) {
+      for (let pro in options.headers) {
+        xhr.setRequestHeader(pro, options.headers[pro]);
+      }
+    }
     xhr.send();
   } else {
     xhr.open('POST', options.url, true);
