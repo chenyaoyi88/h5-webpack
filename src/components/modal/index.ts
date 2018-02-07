@@ -1,5 +1,6 @@
 import './modal.scss';
 
+
 const modal = {
   show: function (options?: ShowModal) {
     // 防止重复生成
