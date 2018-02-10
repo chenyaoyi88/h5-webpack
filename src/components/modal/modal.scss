@@ -47,7 +47,7 @@ $modal-text-wrap-height: px2vw(620);
   // 弹窗主内容显示区域
   .modal-text-wrap {
     padding: px2vw(30);
-    height: $modal-text-wrap-height;
+    // height: $modal-text-wrap-height;
     display: flex;
     flex-direction: column;
     align-items: center;
