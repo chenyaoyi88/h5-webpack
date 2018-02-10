@@ -9,7 +9,7 @@ if (APP_ENV !== 'production') {
 
 console.log('当前环境：' + APP_ENV);
 
-let requestHost = '//';
+let requestHost = '';
 
 if (APP_ENV === 'development') {
   // 开发环境

@@ -5,10 +5,14 @@ import { modalConfig } from './config';
 
 Tool.domReady(() => {
   // 初始化微信 js-sdk 配置，以及分享到朋友圈/好友功能
-  weixin.init();
+  // weixin.init();
+
+  modal.show(modalConfig({
+    code: 'error',
+    isShowAnimate: true
+  }));
 
   const oBtnSubmit = document.getElementById('submit-btn');
-  const oBtnDownload = document.getElementById('download-btn');
   const oPhone = document.getElementById('phone') as HTMLInputElement;
 
   /**
@@ -16,59 +20,23 @@ Tool.domReady(() => {
    */
   oBtnSubmit.addEventListener(
     'click',
-    function() {
-      modal.show(
-        modalConfig({
+    function () {
+
+      if (!/\d{11}/.test(oPhone.value)) {
+        toast('您输入的手机号码格式有误');
+        return;
+      }
+
+      loading.show();
+      setTimeout(function () {
+        loading.hide();
+
+        modal.show(modalConfig({
           code: 'error',
           isShowAnimate: true
-        })
-      );
+        }));
 
-      // modal.show({
-      //   content: '万事如意',
-      //   isShowAnimate: true,
-      //   modalClass: 'aaa',
-      // });
-
-      // if (!/\d{11}/.test(oPhone.value)) {
-      //   toast('您输入的手机号码格式有误');
-      //   return;
-      // }
-
-      // loading.show();
-
-      // ajax({
-      //   type: 'POST',
-      //   url: api.receiveRedpack,
-      //   data: JSON.stringify({
-      //     phone: oPhone.value,
-      //     openId: Tool.getQueryString('openId')
-      //   }),
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   success: function(data: any) {
-      //     loading.hide();
-      //     modal.show(modalConfig(data.code));
-      //     console.log(data);
-      //   },
-      //   error: function(err: any) {
-      //     loading.hide();
-      //     console.log(err);
-      //     modal.show(modalConfig('500'));
-      //   }
-      // });
-    },
-    false
-  );
-
-  /**
-   * 点击下载司机端 app
-   */
-  oBtnDownload.addEventListener(
-    'click',
-    function() {
-      Tool.appDownload('dirver');
+      }, 2000);
     },
     false
   );

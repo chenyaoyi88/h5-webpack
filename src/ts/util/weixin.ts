@@ -9,9 +9,7 @@ const weixin = {
     // 分享标题
     title: '分享标题',
     // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-    link: `https://www.guanghuobao.com/${
-      Env === 'production' ? '' : 'sit/'
-    }api/v1/wechat/auth/receiveRedpack/request`,
+    link: ``,
     // 分享描述（分享描述不能过长，否则会影响分享图标分享给好友时无法正常显示）
     desc: '分享描述',
     // 分享图标
