@@ -64,11 +64,7 @@ const modal = {
 
     oBody.insertAdjacentHTML(
       'beforeend',
-<<<<<<< HEAD
       `<div class="modal ${
-=======
-      `<div class="modal act-normal ${
->>>>>>> aba9be5a225cb531dfbc19385d46957425ffad02
       options.isShowAnimate ? 'modal-animate' : ''
       } ${options.modalClass || ''}" id="${ModalId}">
             <div class="modal-wrap ${options.modalWrapClass || ''}">
