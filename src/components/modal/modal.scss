@@ -22,7 +22,7 @@ $modal-text-wrap-height: px2vw(620);
   justify-content: center;
   .modal-wrap {
     width: $modal-wrap-width;
-    // min-height: $modal-wrap-min-height;
+    max-height: 80%;
     margin-top: px2vw(-206);
     background-color: #fff;
     position: relative;
@@ -44,10 +44,10 @@ $modal-text-wrap-height: px2vw(620);
 .modal-content {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   // 弹窗主内容显示区域
   .modal-text-wrap {
     padding: px2vw(30);
-    // height: $modal-text-wrap-height;
     display: flex;
     flex-direction: column;
     align-items: center;

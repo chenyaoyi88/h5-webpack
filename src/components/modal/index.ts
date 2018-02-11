@@ -1,12 +1,13 @@
 import './modal.scss';
+import { setTimeout } from 'timers';
 
 interface ShowModal {
   // 要现实的文本
   content: string;
   // 是否展示动画
   isShowAnimate?: boolean;
-  // 是否展示动画
-  modalAnimate?: string;
+  // 动画延时
+  duration?: number;
   // modal 另外添加的样式名
   modalClass?: string;
   // modalWrap 另外添加的样式名
@@ -23,18 +24,18 @@ interface ShowModal {
   confirmCallback?: Function;
   // 关闭按钮回调
   closeCallback?: Function;
+  // 打开弹窗回调
+  openCallback?: Function;
 }
 
 const modal = {
-  show: function (options?: ShowModal) {
-    // 防止重复生成
-    if (document.getElementById('modal')) {
-      return;
-    }
-
-    const ModalId = 'modal-' + new Date().getTime();
-    const oBody = document.body;
-
+  oModalEle: null,
+  oBody: null,
+  oBodyCurPos: '',
+  sModalId: 'modal',
+  options: {},
+  duration: 300,
+  create: function (options?: ShowModal) {
     // 判断字符串里有没有标签
     let sContentHtml = '';
     if (/<[^>]+>/g.test(options.content)) {
@@ -51,33 +52,30 @@ const modal = {
     let sBtnWrapHtml = '';
     if (/<[^>]+>/g.test(options.confirmHtml)) {
       sBtnWrapHtml = `
-      <div data-id="modal-close-btn" id="modal-confirm">${
-        options.confirmHtml
-        }</div>
+        <div data-id="modal-close-btn">${options.confirmHtml}</div>
       `;
     } else {
       sBtnWrapHtml = `
-      <button data-id="modal-close-btn" id="modal-confirm" class="modal-btn">${options.confirmText ||
-        '知道了'}</button>
-              `;
+        <button data-id="modal-close-btn" class="modal-btn">${options.confirmText || '知道了'}</button>
+      `;
     }
 
-    oBody.insertAdjacentHTML(
+    this.oBody = document.body;
+    this.options = options;
+
+    this.oBody.insertAdjacentHTML(
       'beforeend',
       `<div class="modal ${
       options.isShowAnimate ? 'modal-animate' : ''
-      } ${options.modalClass || ''}" id="${ModalId}">
+      } ${options.modalClass || ''}" id="${this.sModalId}">
             <div class="modal-wrap ${options.modalWrapClass || ''}">
                 <div class="modal-content ${options.contentWrapClass || ''}">
-
-                    <div data-id="modal-text-wrap" class="modal-text-wrap modal-normal ${options.textWrapClass ||
-      ''}">
+                    <div data-id="modal-text-wrap" class="modal-text-wrap modal-normal ${options.textWrapClass || ''}">
                         ${sContentHtml}
                     </div>
                     <div data-id="modal-btn-wrap" class="modal-btn-wrap">
                         ${sBtnWrapHtml}
                     </div>
-
                 </div>
             </div>
             <div class="modal-bg"></div>
@@ -85,70 +83,71 @@ const modal = {
         `
     );
 
-    const oModal = document.getElementById(ModalId) as HTMLDivElement;
-    const oModalContentWrap = oModal.querySelector('[data-id=modal-text-wrap]');
-    const oModalBtnWrap = oModal.querySelector('[data-id=modal-btn-wrap]');
-    const aModalCloseBtn = oModal.querySelectorAll('[data-id=modal-close-btn]');
-    let curPos: any = '';
+    this.oModalEle = document.getElementById(this.sModalId) as HTMLDivElement;
+  },
+  remove: function (event: any) {
+    event.preventDefault();
+    const oTarget = event.srcElement;
+    const targetID = oTarget['dataset'].id;
 
-    const removeModal = function (event: any): void {
-      event.preventDefault();
-      const oTarget = event.srcElement;
-      const targetID = oTarget['dataset'].id;
-      if (targetID === 'modal-close-btn') {
-        if (oTarget.id === 'modal-confirm') {
-          // 点击确定回调
-          options.confirmCallback && options.confirmCallback();
-        }
+    // 点击关闭
+    if (targetID === 'modal-close-btn') {
+      if (this.options.isShowAnimate) {
+        // 如果是动画打开
+        this.oModalEle.classList.remove('show-animate');
 
-        if (oTarget.id === 'modal-close') {
-          // 点击关闭回调
-          options.closeCallback && options.closeCallback();
-        }
+        setTimeout(() => { 
+          if (this.oBody.contains(this.oModalEle)) {
+            this.oBody.removeChild(this.oModalEle);
+            this.options.confirmCallback && this.options.confirmCallback();
+            document.removeEventListener('click', this.remove, false);
+          }
+        }, this.duration);
 
-        if (options.isShowAnimate) {
-          // 如果是动画打开
-          oModal.classList.remove('show-animate');
-          oModal.addEventListener(
-            'webkitTransitionEnd',
-            function () {
-              if (oBody.contains(oModal)) {
-                oBody.removeChild(oModal);
-              }
-              document.removeEventListener('click', removeModal, false);
-            },
-            false
-          );
-        } else {
-          // 不是动画打开
-          oBody.removeChild(oModal);
-          document.removeEventListener('click', removeModal, false);
-        }
-
-        // 恢复位置
-        oBody.style.overflow = '';
-        oBody.style.position = null;
-        oBody.style.top = null;
-        window.scrollTo(0, curPos);
-
+      } else {
+        // 非动画打开
+        this.oBody.removeChild(this.oModalEle);
+        this.options.confirmCallback && this.options.confirmCallback();
+        document.removeEventListener('click', this.remove, false);
       }
-    };
+
+      // 恢复位置
+      this.oBody.style.overflow = '';
+      this.oBody.style.position = null;
+      this.oBody.style.top = null;
+      window.scrollTo(0, this.oBodyCurPos);
+    }
+  },
+  show: function (options?: ShowModal) {
+    // 防止重复生成
+    if (document.getElementById(this.sModalId)) {
+      return;
+    }
+
+    this.create(options);
 
     if (options.isShowAnimate) {
-      setTimeout(function () {
-        oModal.classList.add('show-animate');
+      setTimeout(() => {
+        this.oModalEle.classList.add('show-animate');
       }, 50);
     }
 
     const scrollTop = window.pageYOffset
       || document.documentElement.scrollTop
-      || oBody.scrollTop
+      || this.oBody.scrollTop
       || 0;
-    curPos = scrollTop;//保存当前滚动条位置
-    oBody.style.top = -1 * scrollTop + "px";
-    oBody.style.position = 'fixed';
+    this.oBodyCurPos = scrollTop;
+    this.oBody.style.top = -1 * scrollTop + "px";
+    this.oBody.style.position = 'fixed';
 
-    document.addEventListener('click', removeModal, false);
+    setTimeout(() => {
+      options.openCallback && options.openCallback()
+    }, this.duration);
+
+    document.addEventListener('click', (ev) => {
+      this.remove(ev);
+    }, false);
+
   }
 };
 

@@ -6,6 +6,8 @@ interface ModalConfig {
   code?: string;
   // 是否显示动画
   isShowAnimate?: boolean;
+  confirmCallback?: Function;
+  openCallback?: Function;
 }
 
 /**
@@ -16,6 +18,8 @@ const modalConfig = function(options?: ModalConfig) {
   let imgSrc = '';
   let text1 = '';
   let type = '';
+  let confirmCallback = options.confirmCallback;
+  let openCallback = options.openCallback;
 
   switch (options.code) {
     case 'success':
@@ -39,7 +43,9 @@ const modalConfig = function(options?: ModalConfig) {
         </div>
         `,
     confirmText: '我知道了',
-    isShowAnimate: options.isShowAnimate || false
+    isShowAnimate: options.isShowAnimate || true,
+    confirmCallback: confirmCallback,
+    openCallback: openCallback
   };
 };
 
