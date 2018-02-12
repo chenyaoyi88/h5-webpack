@@ -1,4 +1,4 @@
-import { ajax, api } from '../util';
+import { ajax, api } from './index';
 import * as shareIMG from '../../images/share.jpg';
 
 /**
