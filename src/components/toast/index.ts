@@ -27,8 +27,8 @@ const toast = function(text: string, options: Toast = {}) {
                     </div>`
   );
 
-  var oToast = document.getElementById('toast');
-  var oToastText = oToast.querySelector(
+  const oToast = document.getElementById('toast');
+  const oToastText = oToast.querySelector(
     '[data-id=toast-content]'
   ) as HTMLDivElement;
 

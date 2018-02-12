@@ -25,7 +25,7 @@ button {
     width: 100%;
     height: px2vw(80);
     font-size: px2vw(32);
-    color: #ff4f4f;
+    color: #fff;
     background: #ffbf06;
     border: none;
     outline: none;
@@ -68,7 +68,7 @@ button {
     width: 100%;
     position: absolute;
     left: 0;
-    top: px2vw(445);
+    top: 0;
     z-index: 11;
     padding: 0 px2vw(70);
     @include align-justify(column);

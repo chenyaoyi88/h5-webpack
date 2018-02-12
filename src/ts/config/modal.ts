@@ -8,6 +8,8 @@ interface ModalConfig {
   isShowAnimate?: boolean;
   confirmCallback?: Function;
   openCallback?: Function;
+  beforeOpenCallback?: Function;
+  content?: string;
 }
 
 /**
@@ -18,8 +20,10 @@ const modalConfig = function(options?: ModalConfig) {
   let imgSrc = '';
   let text1 = '';
   let type = '';
+  let content = options.content;
   let confirmCallback = options.confirmCallback;
   let openCallback = options.openCallback;
+  let beforeOpenCallback = options.beforeOpenCallback;
 
   switch (options.code) {
     case 'success':
@@ -34,7 +38,7 @@ const modalConfig = function(options?: ModalConfig) {
   }
   return {
     modalClass: `act-other ${type}`,
-    content: `
+    content: content? content : `
         <div class="modal-img-wrap">
             <img class="img" src="${imgSrc}" alt="">
         </div>
@@ -45,7 +49,8 @@ const modalConfig = function(options?: ModalConfig) {
     confirmText: '我知道了',
     isShowAnimate: options.isShowAnimate || true,
     confirmCallback: confirmCallback,
-    openCallback: openCallback
+    openCallback: openCallback,
+    beforeOpenCallback: beforeOpenCallback
   };
 };
 

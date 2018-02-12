@@ -1,5 +1,4 @@
 import './modal.scss';
-import { setTimeout } from 'timers';
 
 interface ShowModal {
   // 要现实的文本
@@ -26,13 +25,15 @@ interface ShowModal {
   closeCallback?: Function;
   // 打开弹窗回调
   openCallback?: Function;
+  // 打开弹窗之前回调
+  beforeOpenCallback?: Function;
 }
 
 const modal = {
   oModalEle: null,
   oBody: null,
   oBodyCurPos: '',
-  sModalId: 'modal',
+  sModalId: 'cyy-modal',
   options: {},
   duration: 300,
   create: function (options?: ShowModal) {
@@ -70,7 +71,7 @@ const modal = {
       } ${options.modalClass || ''}" id="${this.sModalId}">
             <div class="modal-wrap ${options.modalWrapClass || ''}">
                 <div class="modal-content ${options.contentWrapClass || ''}">
-                    <div data-id="modal-text-wrap" class="modal-text-wrap modal-normal ${options.textWrapClass || ''}">
+                    <div data-id="modal-text-wrap" class="modal-text-wrap ${options.textWrapClass || ''}">
                         ${sContentHtml}
                     </div>
                     <div data-id="modal-btn-wrap" class="modal-btn-wrap">
@@ -125,6 +126,8 @@ const modal = {
     }
 
     this.create(options);
+
+    options.beforeOpenCallback && options.beforeOpenCallback();
 
     if (options.isShowAnimate) {
       setTimeout(() => {
