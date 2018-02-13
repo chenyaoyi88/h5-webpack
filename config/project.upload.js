@@ -16,15 +16,14 @@ const ftpConfig = require('../config.ftp.json');
 // 环境变量
 const ENV = process.env.NODE_ENV;
 
-const appName = '/' + require('../config.json').appName;
-
+const configInfo = require('../confgi.info.json');
 // 远程基本路径
-// const remoteBasePath = './pub/ghb-web';
-// 目录结构
-// const remotePathLevel = '/act2/2018';
+const remoteBasePath = './pub/ghb-web/act';
+// 远程层级路径，如：/2018/08/08/appName
+const remotePathLevel = `/${configInfo.onlineYear}/${configInfo.onlineMonth}/${configInfo.onlineDate}/${configInfo.appName}`;
 
-// 完整的上传目录，下面例子是上传到 ftp 的 ./pub/ghb-web/act/2018/01 文件夹下
-const entireBasePath = './pub/ghb-web/act/2018/01' + appName;
+// 完整的上传目录，下面例子是上传到 ftp 的 ./pub/ghb-web/act/2018/08/08/appName 文件夹下
+const entireBasePath = remoteBasePath + remotePathLevel;
 
 // 目录（文件夹）
 const dir = {
