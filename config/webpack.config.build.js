@@ -123,7 +123,7 @@ module.exports = {
     new FriendlyErrorsPlugin(),
     // 通过 ExtractTextPlugin 把 css 抽离出来，生成一个独立的 css 文件再页面上引入
     new ExtractTextPlugin({
-      filename: 'index.[contenthash].css'
+      filename: 'index.[contenthash:8].css'
     }),
     new HtmlWebpackPlugin({
       favicon: path.resolve(__dirname, PROJECT.PATH.SRC, 'favicon.ico'),

@@ -3,8 +3,10 @@ const fs = require('fs');
 const chalk = require('chalk');
 const Client = require('ftp');
 const ftp = new Client();
+// const ftpConfig_Prod = require('../config.ftp.prod.json');
+const ftpConfig_Test = require('../config.ftp.test.json');
 /**
- * config.ftp.json 的格式
+ * config.ftp.*.json 的格式
  * 
  * {
  *   "host": "主机",
@@ -12,61 +14,64 @@ const ftp = new Client();
  *   "password": "密码"
  * }
  */
-const ftpConfig = require('../config.ftp.json');
-// 环境变量
-const ENV = process.env.NODE_ENV;
-
+const PROJECT = require('./project.config');
 const configInfo = require('../config.info.json');
+// 本地要上传的目录（文件夹）
+let localUploadDir = '';
+// 环境切换
+let urlEnv = '';
+// ftp 配置
+let ftpConfig = {};
+
+switch (process.env.NODE_ENV) {
+  case 'test':
+    localUploadDir = path.resolve(__dirname, PROJECT.PATH.TEST);;
+    urlEnv = 'sit';
+    ftpConfig = ftpConfig_Test;
+    break;
+  case 'production':
+    localUploadDir = path.resolve(__dirname, PROJECT.PATH.PROD);;
+    urlEnv = 'www';
+    // ftpConfig = ftpConfig_Prod;
+    break;
+}
 // 远程基本路径
 const remoteBasePath = './pub/ghb-web/act';
-// 远程层级路径，如：/2018/08/08/appName
+// 远程层级路径，如：/2018/08/appName
 const remotePathLevel = `/${configInfo.onlineYear}/${configInfo.onlineMonth}/${configInfo.appName}`;
-
-// 完整的上传目录，下面例子是上传到 ftp 的 ./pub/ghb-web/act/2018/08/08/appName 文件夹下
-const entireBasePath = remoteBasePath + remotePathLevel;
-
-// 目录（文件夹）
-const dir = {
-  // 本地要读取的目录（文件夹）
-  read: {
-    test: path.resolve(__dirname, '../test'),
-    prod: path.resolve(__dirname, '../prod')
-  }
-};
-
-// 根据当前环境读取打包出来的测试（test） 还是生产（prod）的目录
-const curEnvDir = ENV === 'production' ? dir.read.prod : dir.read.test;
+// 完整的上传目录，下面例子是上传到 ftp 的 ./pub/ghb-web/act/2018/08/appName 文件夹下
+const entireUploadPath = remoteBasePath + remotePathLevel;
+// 访问链接
+const accessUrl = `https://${urlEnv}.guanghuobao.com/ghb-web/act${remotePathLevel}/index.html`;
 // 所有的文件个数
-let aFiles = [];
+let aUploadFiles = [];
 // 上传成功的文件
-let aUploadSuccess = [];
-// 上传失败的文件
-let aUploadFailed = [];
+let aUploadSuccessFiles = [];
 
-log('当前环境路径：' + chalk.green(curEnvDir));
+log('上传的文件夹路径：' + chalk.green(localUploadDir));
 
-readDirLoop(curEnvDir, function (err, data) {
-  aFiles = data;
-});
-
-// 延迟 1 秒连接 ftp，因为上面 readDirLoop 递归计算文件个数需要时间，而且不知道什么时候计算完
-setTimeout(function () {
+// 计算文件个数
+readDirLoop(localUploadDir, function (err, data) {
+  aUploadFiles = data;
 
   ftp.on('ready', function () {
-    log(chalk.green('ftp 连接成功'));
-    createProjectBaseDir(entireBasePath).then(() => {
-      console.log(`约 ${chalk.green(aFiles.length)} 个文件需要上传`);
-      log(chalk.green('开始上传文件...'));
-      readUploadDir(curEnvDir, entireBasePath);
-    });
+    console.log(chalk.green('ftp 连接成功'), '\n');
+    // 延迟 1 秒连接 ftp，因为上面 readDirLoop 递归计算文件个数需要时间，而且不知道什么时候计算完
+    setTimeout(function () {
+      createProjectBaseDir(entireUploadPath).then(() => {
+        console.log(`约 ${chalk.green(aUploadFiles.length)} 个文件需要上传`);
+        log(chalk.green('开始上传文件...'));
+        readUploadDir(localUploadDir, entireUploadPath);
+      });
+    }, 1000);
   });
 
   ftp.on('error', function (err) {
     log(chalk.red('ftp 连接失败'));
   });
 
-  ftp.connect(ftpConfig);
-}, 1000);
+  ftp.connect(ftpConfig_Test);
+});
 
 /**
  * 在 FTP 上创建本项目文件夹
@@ -83,9 +88,7 @@ function createProjectBaseDir(basePath) {
         ftp.end();
         return;
       }
-      log(
-        '在 FTP 上创建本项目文件夹成功：' + chalk.green(basePath)
-      );
+      console.log('在 FTP 上创建本项目文件夹成功：' + chalk.green(basePath), '\n');
       resolve();
     });
   });
@@ -107,12 +110,13 @@ function uploadFile(uploadPath, remotePath, file) {
       return uploadFile(uploadPath, remotePath, file);
     }
     console.log(remoteFilePath, chalk.green('上传成功'));
-    aUploadSuccess.push(remoteFilePath);
-    console.log('已成功上传：' + chalk.green(aUploadSuccess.length) + ' 个');
-    if (aUploadSuccess.length === aFiles.length) {
+    aUploadSuccessFiles.push(remoteFilePath);
+    console.log('已成功上传：' + chalk.green(aUploadSuccessFiles.length) + ' 个');
+    if (aUploadSuccessFiles.length === aUploadFiles.length) {
       ftp.end();
       log(chalk.green('上传完成'));
-      console.log('URL:', chalk.green(`https://sit.guanghuobao.com/ghb-web/act${remotePathLevel}/index.html`));
+      console.log('Access Url:', chalk.green(accessUrl));
+      process.exit(0);
     }
   });
 }

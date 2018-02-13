@@ -1,13 +1,10 @@
-const Promise = require('bluebird');
-const fs = Promise.promisifyAll(require('fs-extra'));;
+const fs = require('fs-extra');
 const path = require('path');
-const colors = require('colors');
+const chalk = require('chalk');
 const PROJECT = require('./project.config');
 const configSEO = require('../config.seo.json');
 const utils = require('./project.utils');
-
-const project_html = 'index.html';
-const indexHtml = path.resolve(__dirname, PROJECT.PATH.SRC, project_html);
+const indexHtml = path.resolve(__dirname, PROJECT.PATH.SRC, 'index.html');
 
 // 要替换描述、关键字和标题
 const aRegInfo = [{
@@ -31,4 +28,4 @@ const newIndexHtml = utils.replaceHtml(aRegInfo, sIndexHtml);
 // 将替换后的 html 内容 重写回去
 fs.writeFileSync(indexHtml, newIndexHtml, 'utf-8');
 
-console.log('SEO初始化完成'.green);
+console.log(chalk.green('SEO初始化完成'));

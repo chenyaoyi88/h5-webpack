@@ -17,7 +17,8 @@
     "bp:dev": "npm run build:dev && npm run preview:dev",
     "bp:test": "npm run build:test && npm run preview:test",
     "bp:prod": "npm run build:prod && npm run preview:prod",
-    "upload:test": "npm run build:test && cross-env NODE_ENV=test node config/project.upload.js"
+    "upload:test": "npm run build:test && cross-env NODE_ENV=test node config/project.upload.js",
+    "upload:prod": "npm run build:prod && cross-env NODE_ENV=production node config/project.upload.js"
   },
   "keywords": [
     "webpack",
