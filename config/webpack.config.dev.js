@@ -23,6 +23,8 @@ module.exports = {
     },
     devServer: {
         contentBase: path.resolve(__dirname, PROJECT.PATH.SRC),
+        // 检测文件改变
+        watchContentBase: true,
         // 一切服务都启用gzip 压缩
         compress: true,
         port: 9000,
@@ -92,13 +94,12 @@ module.exports = {
                 }
             }, {
                 test: /\.html$/,
-                loader: "html-loader"
+                use: 'html-loader'
             }
         ]
     },
     plugins: [
         new FriendlyErrorsPlugin(),
-        new webpack.HotModuleReplacementPlugin(), //热加载插件,
         new HtmlWebpackPlugin({
             favicon: path.resolve(__dirname, PROJECT.PATH.SRC, 'favicon.ico'),
             // 模版 html 路径
@@ -109,6 +110,7 @@ module.exports = {
             hash: true,
             cache: false
         }),
+        new webpack.HotModuleReplacementPlugin(), //热加载插件,
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify(PROJECT.ENV.DEV)

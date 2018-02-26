@@ -4,45 +4,9 @@ import { toast, loading, modal } from '../components';
 import { modalConfig } from './config';
 
 Tool.domReady(() => {
+  
   // 初始化微信 js-sdk 配置，以及分享到朋友圈/好友功能
   // weixin.init();
-
-  let str = ``;
-
-  for (let i = 0; i < 25; i++) {
-    str += `
-    <tr>
-      <td>123</td>
-      <td>456</td>
-    </tr>
-    `;
-  };
-
-  // modal.show({
-  //   modalClass: `act-other`,
-  //   content: `
-  //       <div class="modal-table-wrap">
-  //         <table>
-  //           <thead>
-  //             <tr>
-  //               <th>爱爱爱</th>
-  //               <th>呀呀呀</th>
-  //             </tr>
-  //           </thead>
-  //         </table>
-  //         <div class="table-list-wrap">
-  //           <table>
-  //             <tbody>
-  //               ${str}
-  //             </tbody>
-  //           </table>
-  //         </div>
-  //       </div>
-  //       `,
-  //   confirmText: '我知道了'
-  // });
-
-  const oPhone = document.getElementById('phone') as HTMLInputElement;
 
   document.addEventListener('click', function (ev) {
     const oEvent = ev || event;

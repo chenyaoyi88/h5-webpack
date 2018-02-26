@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const PROJECT = require('./project.config');
 const colors = require('colors');
 
@@ -90,20 +91,18 @@ module.exports = {
       {
         // 处理图片
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[hash:8].[ext]',
-              // 抽取出来放在 images 文件夹里面
-              outputPath: 'images/',
-              // scss 文件背景图路径要以根目录作为参考起点
-              // publicPath: PROJECT.PUBLIC_PATH
-              // 图片在非开发模式下使用相对路径
-              // useRelativePath: ENV === 'development' ? false : true
-            }
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash:8].[ext]',
+            // 抽取出来放在 images 文件夹里面
+            outputPath: 'images/',
+            // scss 文件背景图路径要以根目录作为参考起点
+            // publicPath: PROJECT.PUBLIC_PATH
+            // 图片在非开发模式下使用相对路径
+            // useRelativePath: ENV === 'development' ? false : true
           }
-        ],
+        }],
         exclude: /node_modules/
       },
       {
@@ -135,29 +134,16 @@ module.exports = {
       hash: true
     }),
     // 压缩js
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      comments: false,
-      mangle: {
-        keep_fnames: true,
-        screw_ie8: true
-      },
-      compress: {
-        screw_ie8: true,
-        warnings: false,
-        conditionals: true,
-        unused: true,
-        comparisons: true,
-        sequences: true,
-        dead_code: true,
-        evaluate: true,
-        if_return: true,
-        join_vars: true,
-        negate_iife: false,
-        drop_debugger: true,
-        drop_console: true
-      },
-      compressor: {
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        ecma: 8,
+        output: {
+          comments: false,
+          beautify: false
+        },
+        compress: {
+          drop_console: true
+        },
         warnings: false
       }
     }),
