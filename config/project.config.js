@@ -2,10 +2,9 @@ module.exports = {
     OUTPUT: '/',
     PATH: {
         DEV: '../dev/',
-        PROD: '../prod/',
-        TEST: '../test/',
-        SRC: '../src/',
-        REMOTE: '/public_html'
+        PROD: '../dist_prod/',
+        TEST: '../dist_test/',
+        SRC: '../src/'
     },
     ENV: {
         DEV: 'development',
