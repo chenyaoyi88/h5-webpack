@@ -8,9 +8,7 @@ const IP = require('internal-ip').v4.sync();
 module.exports = {
     entry: {
         // 主逻辑 js
-        'index': './src/ts/index.ts',
-        // 第三方库或者工具
-        'vendor': './src/vendor/vendor.ts'
+        'index': './src/ts/index.ts'
     },
     output: {
         filename: './js/[name].bundle.js',

@@ -9,6 +9,7 @@ if (APP_ENV === 'development') {
   requestHost = '//127.0.0.1:4000';
 } else {
   requestHost = '//' + window.location.host;
+  console.log = console.dir = console.table =  function() {};
 }
 
 const api = {

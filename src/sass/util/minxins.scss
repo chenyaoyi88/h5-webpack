@@ -1,4 +1,4 @@
-// px 转换成 vw
+// px 转换成 vw，以 750 设计搞作为参考
 @function px2vw($px) {
     @return ($px / 750) * 100vw;
 }
@@ -11,6 +11,7 @@
     justify-content: center;
 }
 
+// 遮罩
 @mixin mask($zindex) {
     position: fixed;
     left: 0;

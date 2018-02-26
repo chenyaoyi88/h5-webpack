@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -14,36 +14,44 @@
     <meta http-equiv="Cache" content="no-cache">
     <meta name="description" content="活动的详细描述123">
     <meta name="keywords" content="活动的关键字描述123">
-    <title>活动的标题1234</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <title>活动的标题123</title>
 </head>
 
 <body>
-    <div class="test-bg-img"></div>
-    <div class="act-wrap">
-        <img src="images/success.png" alt="">
-        <img src="images/success.png" alt="">
-        <img src="images/bg0.jpg" alt="">
-        <div class="act-content-wrap">
-            <input class="act-input" placeholder="请输入注册手机号" type="tel" id="phone" maxlength="11">
-            <div class="ele-wrap submit-wrap m-t-36">
-                <button class="act-btn" id="show-modal-text">测试弹窗显示文字</button>
+
+    <div class="wrap">
+        <div class="test-bg-img"></div>
+        <div class="act-wrap">
+            <img src="images/success.png" alt="">
+            <img src="images/success.png" alt="">
+            <img src="images/bg0.jpg" alt="">
+            <div class="act-content-wrap">
+                <input class="act-input" placeholder="请输入注册手机号" type="tel" id="phone" maxlength="11">
+                <div class="submit-wrap m-t-36">
+                    <button class="act-btn" id="show-modal-text">测试弹窗显示文字</button>
+                </div>
+                <div class="submit-wrap m-t-36">
+                    <button class="act-btn" id="show-modal-img">测试弹窗显示图片文字</button>
+                </div>
+                <div class="submit-wrap m-t-36">
+                    <button class="act-btn" id="show-modal-cb">测试弹窗回调</button>
+                </div>
+                <div class="submit-wrap m-t-36">
+                    <button class="act-btn" id="show-toast">测试toast提示</button>
+                </div>
+                <div class="submit-wrap m-t-36">
+                    <button class="act-btn" id="show-loading">测试loading提示</button>
+                </div>
             </div>
-            <div class="ele-wrap submit-wrap m-t-36">
-                <button class="act-btn" id="show-modal-img">测试弹窗显示图片文字</button>
-            </div>
-            <div class="ele-wrap submit-wrap m-t-36">
-                <button class="act-btn" id="show-modal-cb">测试弹窗回调</button>
-            </div>
-            <div class="ele-wrap submit-wrap m-t-36">
-                <button class="act-btn" id="show-toast">测试toast提示</button>
-            </div>
+
         </div>
-        
+        <div style="display:none;">
+            <img src="images/error.png" alt="">
+            <img src="images/success.png" alt="">
+        </div>
     </div>
-    <div style="display:none;">
-        <img src="images/error.png" alt="">
-        <img src="images/success.png" alt="">
-    </div>
+
     <script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </body>
 

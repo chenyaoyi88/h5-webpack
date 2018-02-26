@@ -3,7 +3,5 @@ declare module '*.jpg';
 declare module '*.jpeg';
 declare module '*.svg';
 declare module '*.gif';
-declare var wx: any;
 
-interface Window {
-}
+declare var wx: any;

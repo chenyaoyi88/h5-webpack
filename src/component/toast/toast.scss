@@ -1,5 +1,3 @@
-@import '../index.scss';
-
 .toast {
     position: fixed;
     left: 0;
@@ -31,7 +29,7 @@
         .toast-content {
             padding: 5px 15px;
             margin-bottom: 20%;
-            font-size: px2vw(35);
+            font-size: 18px;
             color: #fff;
             background: rgba(10, 8, 8, 0.75);
             border-radius: 5px;
