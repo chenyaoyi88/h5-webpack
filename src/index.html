@@ -43,12 +43,55 @@
                 <div class="submit-wrap m-t-36">
                     <button class="act-btn" id="show-loading">测试loading提示</button>
                 </div>
+                <div class="submit-wrap m-t-36">
+                    <button class="act-btn" id="show-custom-keyboard">测试自定义数字键盘</button>
+                </div>
             </div>
 
         </div>
         <div style="display:none;">
             <img src="images/error.png" alt="">
             <img src="images/success.png" alt="">
+        </div>
+        <div class="input-keyboard-wrap" id="custom-input-keyboard">
+            <div class="input-wrap">
+                <ul class="input-num-wrap">
+                    <li>*</li>
+                    <li>*</li>
+                    <li>*</li>
+                    <li>*</li>
+                    <li>*</li>
+                    <li>*</li>
+                </ul>
+            </div>
+            <div class="keyboard-wrap" id="custom-keyboard">
+                <div id="custom-keyboard-close" data-keyboard="close" class="keyboard-header-wrap"></div>
+                <table class="keyboard-content-wrap">
+                    <tbody>
+                        <tr>
+                            <td data-keyboard="1">1</td>
+                            <td data-keyboard="2">2</td>
+                            <td data-keyboard="3">3</td>
+                        </tr>
+                        <tr>
+                            <td data-keyboard="4">4</td>
+                            <td data-keyboard="5">5</td>
+                            <td data-keyboard="6">6</td>
+                        </tr>
+                        <tr>
+                            <td data-keyboard="7">7</td>
+                            <td data-keyboard="8">8</td>
+                            <td data-keyboard="9">9</td>
+                        </tr>
+                        <tr>
+                            <td class="dark"></td>
+                            <td data-keyboard="0">0</td>
+                            <td data-keyboard="delete" class="dark delete">x</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="input-keyboard-wrap-bg"></div>
         </div>
     </div>
 

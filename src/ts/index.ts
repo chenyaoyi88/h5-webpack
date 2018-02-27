@@ -53,6 +53,21 @@ domReady(function () {
                     loading.hide();
                 }, 2000);
                 break;
+            case 'show-custom-keyboard':
+                const oCustomIK = document.getElementById('custom-input-keyboard');
+                const oCustomKeyboard = document.getElementById('custom-keyboard');
+                const oCustomKeyboardClose = document.getElementById('custom-keyboard-close');
+                oCustomIK.style.display = 'block';
+                setTimeout(function () {
+                    oCustomKeyboard.classList.add('show');
+                }, 1);
+                oCustomKeyboardClose.addEventListener('click', function () {
+                    oCustomKeyboard.classList.remove('show');
+                    setTimeout(function () {
+                        oCustomIK.style.display = 'none';
+                    }, 400);
+                }, false);
+                break;
         }
 
     }, false);
