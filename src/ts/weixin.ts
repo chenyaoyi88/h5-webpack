@@ -38,6 +38,15 @@ interface WxConfig {
 // 环境变量
 const Env: string = process.env.NODE_ENV;
 
+// 设置分享图片路径
+const setShareImg = function (imgPath: string): string {
+  if (window.location.pathname === '/') {
+    return `${window.location.href + imgPath}`;
+  } else {
+    return `${window.location.href.replace(/\w+.html/gi, imgPath)}`;
+  }
+};
+
 const weixin = {
   config: <WxConfig>{
     // 分享标题
@@ -47,7 +56,7 @@ const weixin = {
     // 分享描述（分享描述不能过长，否则会影响分享图标分享给好友时无法正常显示）
     desc: '分享描述',
     // 分享图标
-    imgUrl: '//' + window.location.host + shareIMG,
+    imgUrl: setShareImg(shareIMG),
     // 分享类型,music、video或link，不填默认为link
     type: '',
     // 如果type是music或video，则要提供数据链接，默认为空

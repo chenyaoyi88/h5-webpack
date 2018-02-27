@@ -72,8 +72,7 @@ module.exports = {
           ],
           // 当SCSS未被提取时使用
           fallback: 'style-loader'
-        }),
-        exclude: /node_modules/
+        })
       },
       {
         // 处理 css 文件

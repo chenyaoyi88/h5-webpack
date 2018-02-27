@@ -1,6 +1,6 @@
 import '../sass/index.scss';
 import { domReady, http } from 'cyy-tool';
-import { toast, loading, modal } from '../component';
+import { toast, loading, modal } from 'cyy-component-act';
 import { modalConfig } from './config';
 import { api } from './api';
 import { appDownload } from './hy';
@@ -8,7 +8,7 @@ import { weixin } from './weixin';
 
 domReady(function () {
 
-    // weixin.init();
+    weixin.init();
 
     http.get('https://www.easy-mock.com/mock/5a30fa3f7ea45c08a5db3128/mock/user/list').then((res) => {
         console.dir('请求结果成功', res.data);
