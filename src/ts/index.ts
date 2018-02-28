@@ -1,6 +1,6 @@
 import '../sass/index.scss';
 import { domReady, http } from 'cyy-tool';
-import { toast, loading, modal } from 'cyy-component-act';
+import { toast, loading, modal, cInputKeyboard } from 'cyy-component-act';
 import { modalConfig } from './config';
 import { api } from './api';
 import { appDownload } from './hy';
@@ -54,19 +54,15 @@ domReady(function () {
                 }, 2000);
                 break;
             case 'show-custom-keyboard':
-                const oCustomIK = document.getElementById('custom-input-keyboard');
-                const oCustomKeyboard = document.getElementById('custom-keyboard');
-                const oCustomKeyboardClose = document.getElementById('custom-keyboard-close');
-                oCustomIK.style.display = 'block';
-                setTimeout(function () {
-                    oCustomKeyboard.classList.add('show');
-                }, 1);
-                oCustomKeyboardClose.addEventListener('click', function () {
-                    oCustomKeyboard.classList.remove('show');
-                    setTimeout(function () {
-                        oCustomIK.style.display = 'none';
-                    }, 400);
-                }, false);
+                cInputKeyboard.show('custom-input-keyboard', {
+                    wrapClass: 'fuck',
+                    title: '请输入验证码',
+                    isShow: true,
+                    len: 6,
+                    compelete: function (data: string) {
+                        alert(data);
+                    }
+                });
                 break;
         }
 
