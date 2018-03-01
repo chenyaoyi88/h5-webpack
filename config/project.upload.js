@@ -76,7 +76,7 @@ readDirFile({
       log(chalk.red('ftp 连接失败'));
     });
 
-    ftp.connect(ftpConfig_Test);
+    ftp.connect(ftpConfig);
   }
 });
 
