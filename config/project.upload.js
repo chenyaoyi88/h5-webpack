@@ -36,17 +36,19 @@ switch (process.env.NODE_ENV) {
     break;
 }
 // 远程基本路径
-const remoteBasePath = './pub/ghb-web/act';
+const uploadBasePath = './pub/ghb-web/act';
 // 远程层级路径，如：/2018/08/appName
-const remotePathLevel = `/${configInfo.onlineYear}/${configInfo.onlineMonth}/${configInfo.appName}`;
+const uploadPathLevel = `/${configInfo.onlineYear}/${configInfo.onlineMonth}/${configInfo.appName}`;
 // 完整的上传目录，下面例子是上传到 ftp 的 ./pub/ghb-web/act/2018/08/appName 文件夹下
-const entireUploadPath = remoteBasePath + remotePathLevel;
+const entireUploadPath = uploadBasePath + uploadPathLevel;
+// 文件访问基本路径
+const fileAccessBasePath = `https://${urlEnv}.guanghuobao.com/ghb-web/act${uploadPathLevel}`;
 // 访问链接
-const accessUrl = `https://${urlEnv}.guanghuobao.com/ghb-web/act${remotePathLevel}/index.html`;
-// 所有的文件个数
+const accessUrl = `${fileAccessBasePath}/index.html`;
 
 log('上传的文件夹路径：' + chalk.green(localUploadDir));
 
+// 这里只是递归计算要上传文件的总数
 readDirFile({
   localDirPath: localUploadDir,
   success: function (err, aUploadFiles) {
@@ -55,11 +57,14 @@ readDirFile({
       createBaseDir(entireUploadPath).then(() => {
         console.log(`共有 ${chalk.green(aUploadFiles.length)} 个文件需要上传`);
         log(chalk.green('开始上传文件...'));
+        // 这里是递归上传所有文件
         readDirFile({
           localDirPath: localUploadDir,
           uploadDirPath: entireUploadPath,
           uploadFilesLength: aUploadFiles.length,
           isUpload: true,
+          accessUrl: accessUrl,
+          fileAccessBasePath: fileAccessBasePath,
           success: function (err, data) {
             console.log(data);
           }
@@ -108,22 +113,32 @@ function readDirFile(opts) {
   options.uploadDirPath = opts.uploadDirPath || '';
   options.uploadFilesLength = opts.uploadFilesLength || 0;
   options.isUpload = opts.isUpload || false;
+  options.accessUrl = opts.accessUrl || '';
+  options.fileAccessBasePath = opts.fileAccessBasePath || '';
 
   let fileList = [];
   let aUploadSuccessFile = [];
+  let aUploadSuccessFileUrl = [];
 
-  function readDirRecur(localDirPath, callback, uploadDirPath) {
-    fs.readdir(localDirPath, function (err, files) {
+  readDirRecur(options);
 
-      if (err) return callback(err, []);
+  /**
+   * 递归读取文件
+   * 
+   * @param {any} options 
+   */
+  function readDirRecur(options) {
+    fs.readdir(options.localDirPath, function (err, files) {
+
+      if (err) return options.success(err, []);
 
       let count = 0
       const checkEnd = function () {
-        ++count == files.length && callback({}, fileList);
+        ++count == files.length && options.success({}, fileList);
       }
 
       files.forEach(function (file) {
-        const fullPath = localDirPath + '/' + file;
+        const fullPath = options.localDirPath + '/' + file;
         fs.stat(fullPath, function (err, stats) {
           if (stats.isDirectory()) {
             if (options.isUpload) {
@@ -134,15 +149,23 @@ function readDirFile(opts) {
                   console.log(chalk.red('创建项目目录失败：'), err);
                   return;
                 }
-                return readDirRecur(fullPath, checkEnd, nextLevelDirPath);
+                return readDirRecur({
+                  localDirPath: fullPath,
+                  uploadDirPath: nextLevelDirPath,
+                  success: options.success,
+                  isUpload: options.isUpload
+                });
               });
             } else {
-              return readDirRecur(fullPath, checkEnd);
+              return readDirRecur({
+                localDirPath: fullPath,
+                success: checkEnd
+              });
             }
           } else {
             if (options.isUpload) {
               // 如果是文件，直接上传
-              uploadFile(localDirPath, uploadDirPath, file);
+              uploadFile(options.localDirPath, options.uploadDirPath, file);
             } else {
               fileList.push(fullPath);
               checkEnd();
@@ -151,30 +174,42 @@ function readDirFile(opts) {
         });
       });
 
-      files.length === 0 && callback({}, fileList);
+      files.length === 0 && options.success({}, fileList);
     })
   }
 
+  /**
+   * 文件上传
+   * 
+   * @param {any} localDirPath 本地文件路径
+   * @param {any} uploadDirPath 上传文件路径
+   * @param {any} file 文件
+   */
   function uploadFile(localDirPath, uploadDirPath, file) {
     const remoteFilePath = uploadDirPath + '/' + file;
+    const remoteAccessPath = options.fileAccessBasePath + remoteFilePath.split(options.uploadDirPath)[1];
     ftp.put(path.join(localDirPath, file), remoteFilePath, function (err) {
       if (err) {
         console.log(file, chalk.red('上传文件失败：'), err);
         console.log(chalk.yellow('尝试重新上传：'), file);
         return uploadFile(localDirPath, uploadDirPath, file);
       }
-      console.log(remoteFilePath, chalk.green('上传成功'));
       aUploadSuccessFile.push(remoteFilePath);
-      console.log('已成功上传：' + chalk.green(aUploadSuccessFile.length) + ' 个');
+      aUploadSuccessFileUrl.push(remoteAccessPath);
+
+      console.log(file, chalk.green('上传成功'));
+      console.log('文件位置：' + chalk.cyanBright(remoteFilePath));
+      console.log('访问路径：' + chalk.green(remoteAccessPath));
+      console.log('已成功上传：' + chalk.green(aUploadSuccessFile.length) + ' 个\n');
+
       if (aUploadSuccessFile.length === options.uploadFilesLength) {
         ftp.end();
         log(chalk.green('上传完成'));
-        console.log('Access Url:', chalk.green(accessUrl));
+        console.log('Access Url:', chalk.green(options.accessUrl), '\n');
+        options.success && options.success({}, aUploadSuccessFileUrl);
         process.exit(0);
       }
     });
   }
 
-
-  readDirRecur(options.localDirPath, options.success, options.uploadDirPath);
 }
