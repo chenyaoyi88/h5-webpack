@@ -190,8 +190,11 @@ function readDirFile(opts) {
     const remoteAccessPath = options.fileAccessBasePath + remoteFilePath.split(options.uploadDirPath)[1];
     ftp.put(path.join(localDirPath, file), remoteFilePath, function (err) {
       if (err) {
-        console.log(file, chalk.red('上传文件失败：'), err);
-        console.log(chalk.yellow('尝试重新上传：'), file);
+        if (err.code === 'ECONNRESET') {
+          console.log(chalk.yellow('连接断开，等待复位后继续上传'), file);
+        } else {
+          console.log(file, chalk.red('上传文件出现错误：'), err);
+        }
         return uploadFile(localDirPath, uploadDirPath, file);
       }
       aUploadSuccessFile.push(remoteFilePath);
