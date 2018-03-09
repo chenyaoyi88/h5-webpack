@@ -54,13 +54,16 @@ domReady(function () {
                 }, 2000);
                 break;
             case 'show-custom-keyboard':
-                cInputKeyboard.show('custom-input-keyboard', {
+                cInputKeyboard.show({
                     wrapClass: 'fuck',
                     title: '请输入验证码',
-                    isShow: true,
+                    isShowInput: true,
                     len: 6,
                     compelete: function (data: string) {
-                        alert(data);
+                        console.log(data);
+                        setTimeout(() => {
+                            cInputKeyboard.close();
+                        }, 1000);
                     }
                 });
                 break;
